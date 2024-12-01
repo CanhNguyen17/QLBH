@@ -39,9 +39,12 @@ app.post('/create', (req, res) => {
 
 /// Trang chủ
 app.get('/shop', (req, res) => {
-    Product.find({}).lean()
-        .then(products => res.json(products))
-        .catch(error => res.status(500).json({ message: error.message }));
+    const category = req.query.category; // Lấy loại sản phẩm từ query params
+    const filter = category ? { category } : {}; // Tạo bộ lọc
+  
+    Product.find(filter)
+      .then((products) => res.json(products))
+      .catch((error) => res.status(500).json({ message: error.message }));
 });
 
 // DS sản phẩm

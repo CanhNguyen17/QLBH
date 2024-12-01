@@ -11,6 +11,7 @@ const Product = new Schema({
     oldPrice: { type: String, require: true },
     newPrice: { type: String, require: true },
     location: { type: String, maxLength: 20 },
+    category: { type: String, maxLength: 20 },
     slug: { type: String, slug: "name", unique: true },
 }, {
     timestamps: true

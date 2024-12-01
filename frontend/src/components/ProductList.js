@@ -9,7 +9,10 @@ import '../css/ProductList.css';
 
 function ProductList({ showSuccessToast }) {
     const [products, setProducts] = useState([]);
-    //
+    const [categories, setCategories] = useState(["Tất cả", "Dây đeo", "Khăn choàng", "Vớ", "Quần", "Chân váy"]);
+    const [selectedCategory, setSelectedCategory] = useState("Tất cả");
+
+    //set Sản phẩm từ API
     useEffect(() => {
         axios.get('http://localhost:5000/shop')
             .then((response) => {
@@ -20,7 +23,7 @@ function ProductList({ showSuccessToast }) {
             });
     }, []);
 
-    //
+    //Thêm sp vào Cart
     const handleAddToCart = (productId) => {
         if (productId) {
             axios.post(`http://localhost:5000/cart/${productId}`)
@@ -28,6 +31,34 @@ function ProductList({ showSuccessToast }) {
                 .catch((error) => console.error('Error adding product to cart:', error));
         }
     };
+
+    // Lọc
+    const fetchProducts = (category) => {
+        const url = category !== "Tất cả"
+            ? `http://localhost:5000/shop?category=${category}`
+            : "http://localhost:5000/shop";
+        axios
+            .get(url)
+            .then((response) => {
+                setProducts(response.data);
+            })
+            .catch((error) => {
+                console.error("Error fetching products:", error);
+                setProducts([]); // Nếu lỗi, đặt danh sách sản phẩm thành rỗng
+            });
+    };
+
+    // Khi thay đổi loại sản phẩm
+    const handleCategoryChange = (event) => {
+        const category = event.target.value;
+        setSelectedCategory(category);
+        fetchProducts(category); // Lấy sản phẩm theo loại được chọn
+    };
+
+    // Lấy ds sản phẩm khi component mount
+    useEffect(() => {
+        fetchProducts(selectedCategory);
+    }, []);
 
     return (
         <div>
@@ -38,8 +69,12 @@ function ProductList({ showSuccessToast }) {
             <div className="product-list">
                 <div className='row page_width filter-search'>
                     <div className="col col-3">
-                        <select className="filter-category">
-                            <option>Danh mục</option>
+                        <select className="filter-category" value={selectedCategory} onChange={handleCategoryChange}>
+                            {categories.map((category) => (
+                                <option key={category} value={category}>
+                                    {category}
+                                </option>
+                            ))}
                         </select>
                     </div>
 
