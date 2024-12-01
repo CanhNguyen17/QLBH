@@ -1,0 +1,122 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+p {
+  margin: 0;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.img-extra {
+  background: linear-gradient(rgba(0, 0, 0, 0.450), rgba(0, 0, 0, 0.500)),
+    url('../../public/img/prd-image.jpg') no-repeat center center;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 230px;
+  color: rgb(215, 209, 209);
+  font-size: 32px;
+  font-weight: 500;
+}
+
+.line-through {
+  text-decoration: line-through;
+}
+
+.font-size_small {
+  font-size: 13px;
+  text-decoration: underline;
+}
+
+h2 {
+  margin: 24px 0 5px 0;
+  font-weight: 500;
+}
+
+.text-gray {
+  font-weight: 550;
+  color: #6e7073;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.remove-text-decoration {
+  text-decoration: none;
+}
+
+button:disabled {
+  background-color: rgb(209, 209, 209);
+  color: rgb(91, 88, 88);
+}
+
+button:disabled:hover {
+  background-color: rgb(209, 209, 209) !important;
+  color: rgb(91, 88, 88) !important;
+  cursor: unset !important;
+}
+
+/* Container chính */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.page_width {
+  width: 100%;
+}
+
+/* Định nghĩa cho các cột */
+.col {
+  box-sizing: border-box;
+}
+
+.col-12 {
+  flex: 1 1 100%;
+  max-width: 100%;
+}
+
+.col-1 {
+  flex: 1 1 calc(8.33% - 16px);
+  max-width: calc(8.33% - 16px);
+}
+
+.col-3 {
+  flex: 1 1 calc(25% - 16px);
+  max-width: calc(25% - 16px);
+}
+
+.col-4 {
+  flex: 1 1 calc(33.33% - 16px);
+  max-width: calc(33.33% - 16px);
+}
+
+.col-6 {
+  flex: 1 1 calc(50% - 16px);
+  max-width: calc(50% - 16px);
+}
+
+.col-7 {
+  flex: 1 1 calc(58.33% - 16px);
+  max-width: calc(58.33% - 16px);
+}
+
+.mt-4 {
+  margin-top: 4px;
+}

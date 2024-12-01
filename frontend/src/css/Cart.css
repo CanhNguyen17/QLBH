@@ -1,0 +1,142 @@
+/* . */
+.cart-list {
+    position: relative;
+    margin: 30px 80px 150px;
+  }
+  
+  .cart-title {
+    border-bottom: 1px solid #dadee3;
+  }
+  
+  .cart-title .col {
+    padding: 0px 0px 15px 20px;
+    font-weight: 600;
+    font-size: 18px;
+    color: #0a1d37;
+  }
+  
+  .cart-item {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #dadee3;
+  }
+  
+  .cart-item_img {
+    padding: 0;
+  }
+  
+  .cart-item_img img {
+    width: 100%;
+  }
+  
+  .cart-item_info h5 {
+    margin: 0;
+    padding-bottom: 7px;
+    font-size: 18px;
+    font-weight: 400;
+    color: rgb(59, 58, 58);
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    text-overflow: ellipsis;
+    width: 85%;
+    height: 26px;
+  }
+  
+  .cart-item_info h5:hover {
+    text-decoration: underline;
+    color: #145eac;
+  }
+  
+  .cart-item_info p {
+    padding-bottom: 7px;
+  }
+  
+  .cart-item_quantity {
+    display: flex;
+    align-items: center;
+  }
+  
+  .cart-item_quantity p {
+    color: red;
+    font-size: 14px;
+  }
+  
+  .cart-item_quantity button {
+    width: 35px;
+    height: 35px;
+    margin: 10px;
+    border-radius: 4px;
+    border: 1px solid black;
+  }
+  
+  .cart-item_quantity button:hover {
+    background-color: black;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .trashcan {
+    margin-left: 40px;
+    font-size: 20px;
+    color: rgb(214, 15, 15);
+  }
+  
+  .trashcan:hover {
+    cursor: pointer;
+  }
+  
+  .cart-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: -80px;
+  }
+  
+  .cart-empty_back {
+    margin: 35px 0;
+    font-weight: 600;
+    font-size: 18px;
+  }
+  
+  .cart-item_total {
+    width: 100%;
+    height: 123px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.3);
+    color: white;
+    background-color: #0a1d37;
+    border: 1px solid rgb(184, 178, 178);
+  }
+  
+  .cart-item_total p {
+    font-size: 17px;
+  }
+  
+  .cart-item_total h4 {
+    font-size: 20px;
+    padding: 8px 0;
+    text-align: center;
+  }
+  
+  .cart-item_total button {
+    width: 100%;
+    background-color: white;
+    color: #0a1d37;
+    border-radius: 5px;
+    padding: 8px;
+    font-size: 16px;
+  }
+  
+  .cart-item_total button:hover {
+    cursor: pointer;
+    color: white;
+    border:1.5px solid #6c86ab;
+    background-color:#264871 ;
+  }
