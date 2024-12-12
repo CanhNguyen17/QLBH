@@ -2,6 +2,15 @@
     padding: 30px 80px;
 }
 
+.color-text-home {
+    color: red;
+}
+
+.color-text-home:hover {
+    color: rgb(190, 78, 74);
+    text-decoration: underline;
+}
+
 .detail_page {
     background-color: #e9ecef;
     border-radius: 5px;

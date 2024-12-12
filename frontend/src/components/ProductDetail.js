@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
 import '../css/ProductDetail.css';
 
-function ProductDetail({ showSuccessToast }) {
+function ProductDetail({ handleAddToCart,showSuccessToast }) {
     const { slug } = useParams();
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -15,7 +15,6 @@ function ProductDetail({ showSuccessToast }) {
     useEffect(() => {
         axios.get(`http://localhost:5000/product/${slug}`)
             .then(response => {
-                console.log("Product data:", response.data);
                 setProduct(response.data);
                 setLoading(false);
             })
@@ -25,13 +24,6 @@ function ProductDetail({ showSuccessToast }) {
             });
     }, [slug]);
 
-    const handleAddToCart = (productId) => {
-        if (productId) {
-            axios.post(`http://localhost:5000/cart/${productId}`)
-                .then(() => '')
-                .catch((error) => console.error('Error adding product to cart:', error));
-        }
-    };
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>{error}</p>;

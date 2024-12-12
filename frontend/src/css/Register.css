@@ -1,0 +1,71 @@
+.register {
+    display: flex;
+    flex-direction: column;
+    padding: 3% 0 5% 0;
+}
+
+.register-title {
+    text-align: center;
+    color: white;
+    font-weight: 700;
+    font-size: 30px;
+    padding-bottom: 1.5%;
+    z-index: 1;
+}
+
+.register-form {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    position: relative;
+    background-color: #0a1d37;
+    border-radius: 1vh;
+    width: 28%;
+    height: 40vh;
+    padding: 2% 1%;
+    box-shadow: 0 0 30px rgb(244, 244, 246);
+}
+
+.register-form input {
+    width: 100%;
+    align-self: center;
+    padding: 3.5%;
+    border-radius: 1vh;
+}
+
+.register-form button {
+    width: 30%;
+    padding: 3.5%;
+    margin-top: 8%;
+    margin-bottom: 0;
+    color: #0a1d37;
+    background-color: white;
+    align-self: center;
+}
+
+.register-form button:hover {
+    color: white;
+    background-color: #0758c9;
+}
+
+.register-question {
+    color: white;
+    align-self: center;
+    margin-top: 3%;
+}
+
+.register span {
+    position: absolute;
+    align-self: center;
+    color: orange;
+    font-size: 2.5vh;
+    bottom: 261px;
+}
+
+.link-to_login {
+    color: orange;
+}
+
+.link-to_login:hover {
+    color: white;
+}

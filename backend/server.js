@@ -2,11 +2,15 @@
 const Product = require('./app/models/Product');
 const ProductCart = require('./app/models/ProductCart');
 const User = require('./app/models/User')
-const express = require('express');
+//
+const verifyToken = require('./middlewares/VerifyToken');
+//
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const cors = require('cors');
+const express = require('express');
 const mongoose = require('mongoose');
+require('dotenv').config();
 const app = express();
 const PORT = 5000;
 
@@ -28,6 +32,7 @@ mongoose.connect('mongodb://localhost:27017/mydatabase', {
 // Tạo sản phẩm mới
 app.post('/create', (req, res) => {
     const product = new Product(req.body)
+
     product.save()
         .then(() => {
             res.status(200).json({ success: true });
@@ -40,14 +45,39 @@ app.post('/create', (req, res) => {
 /// Trang chủ
 app.get('/shop', (req, res) => {
     const category = req.query.category; // Lấy loại sản phẩm từ query params
+    const sort = req.query.sort;
     const filter = category ? { category } : {}; // Tạo bộ lọc
-  
+    const query = req.query.q ? req.query.q.toLowerCase() : ''; // Từ khóa tìm kiếm
+
     Product.find(filter)
-      .then((products) => res.json(products))
-      .catch((error) => res.status(500).json({ message: error.message }));
+        .sort(sort === 'asc' ? { newPrice: 1 } : sort === 'desc' ? { newPrice: -1 } : {})
+        .then((products) => {
+            // Nếu có từ khóa tìm kiếm, lọc lại danh sách sản phẩm
+            const filteredProducts = query
+                ? products.filter(product => product.name.toLowerCase().includes(query))
+                : products;
+
+            // Nếu tìm thấy sản phẩm, trả kết quả
+            if (filteredProducts.length > 0) {
+                res.json(filteredProducts);
+            } else {
+                // Nếu không tìm thấy sản phẩm, trả lỗi
+                res.status(404).json({ message: 'No products found' });
+            }
+        })
+        .catch((error) => res.status(500).json({ message: error.message }));
 });
 
-// DS sản phẩm
+//
+app.get('/best-seller', (req, res) => {
+    Product.find()
+        .then((products) => {
+            res.json(products.filter(product => product.isBestSeller));
+        })
+        .catch((error) => res.status(500).json({ message: error.message }));
+});
+
+// DS sản phẩm product detail
 app.get('/product/:slug', (req, res) => {
     Product.findOne({ slug: req.params.slug }).lean()
         .then(products =>
@@ -56,22 +86,34 @@ app.get('/product/:slug', (req, res) => {
 });
 
 // Thêm sản phẩm vào giỏ hàng 
-app.post('/cart/:id', (req, res) => {
-    Product.findById({ _id: req.params.id })
+app.post('/cart/:id', verifyToken, (req, res) => {
+    const { userId } = req.user;
+
+    Product.findById(req.params.id)
         .then(product => {
             if (!product) {
                 return res.status(404).json({ message: 'Product not found' });
             }
 
-            const newCartItem = new ProductCart({
-                productId: product._id,
-                name: product.name,
-                image: product.image,
-                newPrice: product.newPrice,
-            });
-
-            return newCartItem.save();
-
+            // Kiểm tra sản phẩm đã tồn tại trong giỏ hàng
+            return ProductCart.findOne({ userId, productId: product._id })
+                .then(cartItem => {
+                    if (cartItem) {
+                        // Nếu đã có, tăng số lượng
+                        cartItem.quantity += 1;
+                        return cartItem.save();
+                    } else {
+                        // Nếu chưa có, tạo mới
+                        const newCartItem = new ProductCart({
+                            userId,
+                            productId: product._id,
+                            name: product.name,
+                            image: product.image,
+                            newPrice: product.newPrice,
+                        });
+                        return newCartItem.save();
+                    }
+                });
         })
         .then(() => res.status(200).json({ message: 'Product added to cart' }))
         .catch(error => res.status(500).json({ message: error.message }));
@@ -111,7 +153,7 @@ app.put('/cart/:id', (req, res) => {
 
 // Đăng ký người dùng
 app.post('/register', (req, res) => {
-    const { email, password } = req.body;
+    const { email, password, role } = req.body;
 
     // Kiểm tra đầu vào
     if (!email || !password) {
@@ -120,7 +162,7 @@ app.post('/register', (req, res) => {
     // Băm mật khẩu và lưu vào cơ sở dữ liệu
     bcrypt.hash(password, 10)
         .then((hashedPassword) => {
-            const newUser = new User({ email, password: hashedPassword });
+            const newUser = new User({ email, password: hashedPassword, role });
             return newUser.save();
         })
         .then(() => {
@@ -147,13 +189,13 @@ app.post('/login', (req, res) => {
                 return res.status(404).send('User not found');
             }
             // So sánh mật khẩu
-            return bcrypt.compare(password, user.password)
+            bcrypt.compare(password, user.password)
                 .then((isPasswordValid) => {
                     if (!isPasswordValid) {
                         return res.status(401).send('Invalid credentials');
                     }
                     // Tạo token
-                    const token = jwt.sign({ id: user._id }, 'secret_key', { expiresIn: '1h' });
+                    const token = jwt.sign({ userId: user._id, role: user.role }, process.env.JWT_SECRET || 'secret_key', { expiresIn: '30s' });
                     res.status(200).json({ token });
                 });
         })

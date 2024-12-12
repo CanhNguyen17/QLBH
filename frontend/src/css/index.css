@@ -30,6 +30,12 @@ ul {
   font-weight: 500;
 }
 
+.img-login-register {
+  background: linear-gradient( rgba(23, 15, 52, 0.5), rgba(23, 15, 52, 0.5)),
+    url('../../public/img/background-lg-register.jpg') no-repeat center center;
+  background-size: cover;
+}
+
 .line-through {
   text-decoration: line-through;
 }

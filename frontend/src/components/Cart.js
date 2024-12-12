@@ -172,7 +172,7 @@ function Cart() {
                                 </div>
 
                                 <div>
-                                    <h4>{total.toFixed(3)}</h4>
+                                    <h4>{total}</h4>
                                 </div>
 
                                 <button>Đặt hàng</button>

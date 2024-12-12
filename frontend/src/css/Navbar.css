@@ -1,0 +1,75 @@
+.name-shop {
+    font-weight: 700;
+    color: #0a1d37;
+    font-size: 23px;
+    text-decoration: none;
+  }
+  
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 80px;
+  }
+  
+  .nav-header-between {
+    font-size: 16.5px;
+  }
+  
+  .nav-header-between_home {
+    text-decoration: none;
+    margin-right: 40px;
+    color: #0a1d37
+  }
+  
+  .nav-header-between_shop {
+    text-decoration: none;
+    margin-right: 40px;
+    color: #0a1d37;
+  }
+  
+  .nav-header-between_cart {
+    text-decoration: none;
+    color: #0a1d37;
+  }
+  
+  .nav-header-between a.active {
+    font-weight: bold;
+    border-bottom: 2px solid #0a1d37;
+  }
+  
+  .nav-header-right {
+    font-size: 16.5px;
+  }
+  
+  .nav-header-right_cart {
+    color: #0a1d37;
+    text-decoration: none;
+    padding-right: 10px;
+  }
+  
+  .nav-header-right_cart:hover {
+    color: #0758c9
+  }
+  
+  .faWind {
+    padding-right: 10px;
+  }
+  
+  .faUser {
+    padding-right: 5px;
+  }
+  
+  .nav-header-right_sign {
+    color: #0a1d37;
+    text-decoration: none;
+  }
+  
+  .nav-header-right_sign:hover {
+    color: #0758c9
+  }
+  

@@ -1,6 +1,4 @@
 
-
-
 function DeleteModal({ ModalOpen, handleCloseModal, handleDelete }) {
     if (!ModalOpen) return null; // Modal không hiển thị nếu không mở
 

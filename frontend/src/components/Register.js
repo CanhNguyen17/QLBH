@@ -1,6 +1,8 @@
 import React from "react";
 import axios from "axios";
 import { useState } from "react";
+import { Link } from 'react-router-dom';
+import '../css/Register.css'
 
 function Register() {
     const [email, setEmail] = useState('');
@@ -13,38 +15,43 @@ function Register() {
         axios
             .post('http://localhost:5000/register', { email, password })
             .then((response) => {
-                setMessage('Registration successful! Please log in.');
+                setMessage('Đăng ký thành công! Vui lòng đăng nhập');
             })
             .catch((error) => {
-                setMessage('Registration failed: ' + error.response?.data || 'Unknown error');
+                setMessage('Đăng ký thất bại');
             });
     };
 
     return (
-        <div>
-            <h2>Register</h2>
-            <form onSubmit={handleRegister}>
-                <div>
-                    <label>Email:</label>
+        <div className="img-login-register">
+            <div className="register">
+                <p className="register-title">Đăng ký</p>
+                <form className="register-form" onSubmit={handleRegister}>
                     <input
                         type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
-                    />
-                </div>
-                <div>
-                    <label>Password:</label>
+                        placeholder="Email" />
+
                     <input
                         type="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required
-                    />
-                </div>
-                <button type="submit">Register</button>
-            </form>
-            {message && <p>{message}</p>}
+                        placeholder="Mật khẩu" />
+
+                    <button type="submit">Đăng ký</button>
+
+                    <p className="register-question">Đã có tài khoản?
+                        <Link className="link-to_login" to={`/login`}> Đăng nhập ngay</Link>
+                    </p>
+                </form>
+
+                <span>
+                    <p>{message}</p>
+                </span>
+            </div>
         </div>
     )
 }

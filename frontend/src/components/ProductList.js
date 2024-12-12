@@ -1,16 +1,21 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartPlus, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import '../css/ProductList.css';
+import debounce from 'lodash.debounce';
 
-function ProductList({ showSuccessToast }) {
+function ProductList({ handleAddToCart, showSuccessToast }) {
     const [products, setProducts] = useState([]);
     const [categories, setCategories] = useState(["Tất cả", "Dây đeo", "Khăn choàng", "Vớ", "Quần", "Chân váy"]);
     const [selectedCategory, setSelectedCategory] = useState("Tất cả");
+    ///
+    const [sortOrder, setSortOrder] = useState("");
+    ////
+    const [query, setQuery] = useState(''); // Từ khóa tìm kiếm
 
     //set Sản phẩm từ API
     useEffect(() => {
@@ -23,22 +28,25 @@ function ProductList({ showSuccessToast }) {
             });
     }, []);
 
-    //Thêm sp vào Cart
-    const handleAddToCart = (productId) => {
-        if (productId) {
-            axios.post(`http://localhost:5000/cart/${productId}`)
-                .then(() => '')
-                .catch((error) => console.error('Error adding product to cart:', error));
-        }
+    // Khi thay đổi loại sản phẩm
+    const handleCategoryChange = (event) => {
+        const category = event.target.value;
+        setSelectedCategory(category);
+        fetchProducts(category, sortOrder); // Lấy sản phẩm theo loại được chọn
     };
+    ///
+    const handleSortChange = (event) => {
+        const sort = event.target.value;
+        setSortOrder(sort);
+        fetchProducts(selectedCategory, sort);
+    }
 
     // Lọc
-    const fetchProducts = (category) => {
-        const url = category !== "Tất cả"
-            ? `http://localhost:5000/shop?category=${category}`
-            : "http://localhost:5000/shop";
-        axios
-            .get(url)
+    const fetchProducts = (category, sort) => {
+        const baseUrl = "http://localhost:5000/shop";
+        const url = `${baseUrl}?category=${category !== "Tất cả" ? category : ""}&sort=${sort}`;
+
+        axios.get(url)
             .then((response) => {
                 setProducts(response.data);
             })
@@ -48,16 +56,40 @@ function ProductList({ showSuccessToast }) {
             });
     };
 
-    // Khi thay đổi loại sản phẩm
-    const handleCategoryChange = (event) => {
-        const category = event.target.value;
-        setSelectedCategory(category);
-        fetchProducts(category); // Lấy sản phẩm theo loại được chọn
-    };
-
     // Lấy ds sản phẩm khi component mount
     useEffect(() => {
-        fetchProducts(selectedCategory);
+        fetchProducts(selectedCategory, sortOrder);
+    }, []);
+
+
+    //// Xử lý nhập liệu trong ô tìm kiếm
+    const handleInputChange = (e) => {
+        const value = e.target.value;
+        setQuery(value);
+        debouncedSearch(value); // Gọi debounce để tránh gọi API liên tục
+    };
+
+    //// Debounce hàm tìm kiếm
+    const debouncedSearch = useCallback(
+        debounce((value) => {
+            loadProducts(value); // Gọi API sau khi debounce
+        }, 500),
+        []);
+
+    //// Hàm gọi API từ backend và xử lý tìm kiếm với Promise
+    const loadProducts = (searchQuery) => {
+        axios
+            .get(`http://localhost:5000/shop?q=${searchQuery}`)
+            .then((response) => {
+                setProducts(response.data);
+            })
+            .catch((error) => console.error('Error adding product to cart:', error));
+
+    };
+
+    //// Tải sản phẩm khi trang load lần đầu
+    useEffect(() => {
+        loadProducts('');
     }, []);
 
     return (
@@ -70,7 +102,7 @@ function ProductList({ showSuccessToast }) {
                 <div className='row page_width filter-search'>
                     <div className="col col-3">
                         <select className="filter-category" value={selectedCategory} onChange={handleCategoryChange}>
-                            {categories.map((category) => (
+                            {categories.map(category => (
                                 <option key={category} value={category}>
                                     {category}
                                 </option>
@@ -79,14 +111,16 @@ function ProductList({ showSuccessToast }) {
                     </div>
 
                     <div className="col col-3 ">
-                        <select className="filter-sortby">
+                        <select className="filter-sortby" value={sortOrder} onChange={handleSortChange}>
                             <option>Sắp xếp</option>
+                            <option value={"asc"}>Tăng dần</option>
+                            <option value={"desc"}>Giảm dần</option>
                         </select>
                     </div>
 
                     <div className="col col-6 search-common">
                         <FontAwesomeIcon className="faMagnifyingGlass" icon={faMagnifyingGlass} />
-                        <input className="search-product" placeholder="Tìm kiếm..."></input>
+                        <input className="search-product" onChange={handleInputChange} placeholder="Tìm kiếm..."></input>
                     </div>
                 </div>
 

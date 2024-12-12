@@ -1,41 +1,59 @@
 import React from "react";
 import axios from "axios";
 import { useState } from "react";
+import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import '../css/Login.css'
 
 function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
+    //
+    const navigate = useNavigate();
 
     const handleLogin = (e) => {
         e.preventDefault();
 
-        axios
-            .post('http://localhost:5000/login', { email, password })
+        axios.post('http://localhost:5000/login', { email, password })
             .then((response) => {
                 localStorage.setItem('token', response.data.token);
-                setMessage('Login successful');
+                navigate("/");
             })
             .catch((error) => {
-                setMessage('Login failed');
+                setMessage('Đăng nhập thất bại');
             });
     };
 
     return (
-        <div>
-            <h2>Login</h2>
-            <form onSubmit={handleLogin}>
-                <div>
-                    <label>Email:</label>
-                    <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-                </div>
-                <div>
-                    <label>Password:</label>
-                    <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-                </div>
-                <button type="submit">Login</button>
-            </form>
-            {message && <p>{message}</p>}
+        <div className="img-login-register">
+            <div className="login">
+                <p className="login-title">Đăng nhập</p>
+                <form className="login-form" onSubmit={handleLogin}  >
+                    <input
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                        placeholder="Email" />
+
+                    <input
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                        placeholder="Mật khẩu" />
+
+                    <button type="submit">Đăng nhập</button>
+
+                    <p className="login-question">Bạn chưa Đăng ký?
+                        <Link className="link-to_register" to={`/register`}> Đăng ký ngay</Link>
+                    </p>
+                </form>
+                <span>
+                    <p>{message}</p>
+                </span>
+            </div>
         </div>
     )
 }

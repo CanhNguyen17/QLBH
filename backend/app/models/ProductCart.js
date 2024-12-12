@@ -5,10 +5,11 @@ mongoose.plugin(slug);
 const Schema = mongoose.Schema;
 
 const ProductCart = new Schema({
+    userId: { type:String, ref: 'user', required: true },
     productId: { type: String, require: true },
     name: { type: String, require: true },
     image: { type: String, maxLength: 255 },
-    newPrice: { type: String, require: true },
+    newPrice: { type: Number, required: true },
     quantity: {type: Number, default: 1, min: [1]},
     slug: { type: String, slug: "name", unique: true },
 }, {
