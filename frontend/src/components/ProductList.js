@@ -8,7 +8,7 @@ import { faStar } from '@fortawesome/free-solid-svg-icons';
 import '../css/ProductList.css';
 import debounce from 'lodash.debounce';
 
-function ProductList({ handleAddToCart, showSuccessToast }) {
+function ProductList({ handleAddToCart }) {
     const [products, setProducts] = useState([]);
     const [categories, setCategories] = useState(["Tất cả", "Dây đeo", "Khăn choàng", "Vớ", "Quần", "Chân váy"]);
     const [selectedCategory, setSelectedCategory] = useState("Tất cả");
@@ -94,12 +94,12 @@ function ProductList({ handleAddToCart, showSuccessToast }) {
 
     return (
         <div>
-            <div className="row page_width">
+            <div className="row">
                 <div className="col col-12 img-extra">Sản phẩm</div>
             </div>
 
             <div className="product-list">
-                <div className='row page_width filter-search'>
+                <div className='row filter-search'>
                     <div className="col col-3">
                         <select className="filter-category" value={selectedCategory} onChange={handleCategoryChange}>
                             {categories.map(category => (
@@ -124,7 +124,7 @@ function ProductList({ handleAddToCart, showSuccessToast }) {
                     </div>
                 </div>
 
-                <div className='row page_width'>
+                <div className='row'>
                     {products.map((product) => (
                         <div className='col col-3 product-list-wrap' key={product._id}>
                             <div>
@@ -164,7 +164,7 @@ function ProductList({ handleAddToCart, showSuccessToast }) {
                                 </div>
 
                                 <div className="card-body_primary">
-                                    <button className='card-body_primary-button' onClick={() => { handleAddToCart(product._id); showSuccessToast() }}>
+                                    <button className='card-body_primary-button' onClick={() => { handleAddToCart(product._id) }}>
                                         <FontAwesomeIcon className='card-body_primary-cartplus' icon={faCartPlus} />
                                         <p className="card-body_primary-size-p">Thêm vào giỏ</p>
                                     </button>

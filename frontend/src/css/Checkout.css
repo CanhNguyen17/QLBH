@@ -1,0 +1,61 @@
+.info-checkout-container {
+    display: flex;
+    justify-content: center;
+    padding: 2% 0;
+}
+
+.infor-checkout {
+    display: flex;
+    flex-direction: column;
+    max-width: 30%;
+    text-align: center;
+    color: white;
+    border-radius: 5px;
+    border: 1px solid #0a1d37;
+    background-color: #0a1d37;
+}
+
+.infor-checkout-title {
+    padding: 3%;
+}
+
+.infor-checkout-box {
+    color: #0a1d37;
+    padding: 4%;
+    background-color: white;
+}
+
+.infor-checkout-name {
+    width: 62.5vh;
+    font-weight: 600;
+    text-align: left;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    text-overflow: ellipsis;
+}
+
+.infor-checkout-Pee {
+    padding: 2% 2% 0 2%;
+}
+
+.infor-checkout-Pee h4{
+    font-weight: normal;
+    color: rgb(23, 236, 23);
+}
+
+.infor-checkout-button {
+    border: 10px solid #0a1d37;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 600;
+    padding: 3%;
+}
+
+.infor-checkout-button:hover {
+    color: white;
+    background-color: #264871;
+    cursor: pointer;
+}

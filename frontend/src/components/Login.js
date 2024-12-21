@@ -1,23 +1,28 @@
 import React from "react";
 import axios from "axios";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { AuthContext } from "./contexts/AuthContext";
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import '../css/Login.css'
 
-function Login() {
+function Login({ showSuccessLoginToast }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
     //
     const navigate = useNavigate();
 
+    const { login } = useContext(AuthContext);
+
     const handleLogin = (e) => {
         e.preventDefault();
 
         axios.post('http://localhost:5000/login', { email, password })
             .then((response) => {
-                localStorage.setItem('token', response.data.token);
+                const { token, username } = response.data;
+                login(token, username);
+                showSuccessLoginToast();
                 navigate("/");
             })
             .catch((error) => {

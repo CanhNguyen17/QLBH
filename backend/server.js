@@ -2,6 +2,7 @@
 const Product = require('./app/models/Product');
 const ProductCart = require('./app/models/ProductCart');
 const User = require('./app/models/User')
+const ProductOrder = require('./app/models/ProductOrder');
 //
 const verifyToken = require('./middlewares/VerifyToken');
 //
@@ -133,6 +134,7 @@ app.delete('/cart/:id', (req, res) => {
         .catch(error => res.status(500).json({ message: error.message }));
 });
 
+
 // Cập nhật số lượng
 app.put('/cart/:id', (req, res) => {
     const { action } = req.body;
@@ -151,18 +153,61 @@ app.put('/cart/:id', (req, res) => {
         .catch(error => res.status(500).json({ message: error.message }));
 });
 
+// update cart
+app.put('/cart', (req, res) => {
+    // const { userId } = req.body;
+    // ProductCart.deleteMany({ userId })
+    ProductCart.deleteMany()
+        .then(() => res.status(200).json({ message: 'Products deleted successfully' }))
+        .catch(error => res.status(500).json({ message: error.message }));
+});
+
+//dat hang
+app.post('/order', (req, res) => {
+    const { products, total, shippingFee, totalShipping } = req.body;
+
+    // Kiểm tra dữ liệu đầu vào
+    if (!products || products.length === 0) {
+        return res.status(400).json({ success: false, message: 'Danh sách sản phẩm không được để trống' });
+    }
+
+    // Tạo đơn hàng mới
+    const newOrder = new ProductOrder({
+        products,
+        total,
+        shippingFee,
+        totalShipping,
+    });
+
+    newOrder.save()
+        .then(savedOrder => {
+            res.status(201).json({ success: true, order: savedOrder });
+        })
+        .catch(error => {
+            console.error("Error creating order:", error);
+            res.status(500).json({ success: false, message: 'Lỗi máy chủ', error: error.message });
+        });
+});
+
+//DS Don hang
+app.get('/order', (req, res) => {
+    ProductOrder.find({}).lean()
+        .then(products => res.json(products))
+        .catch(error => res.status(500).json({ message: error.message }));
+});
+
 // Đăng ký người dùng
 app.post('/register', (req, res) => {
-    const { email, password, role } = req.body;
+    const { username, email, password, role } = req.body;
 
     // Kiểm tra đầu vào
-    if (!email || !password) {
+    if (!username || !email || !password) {
         return res.status(400).json({ error: 'Email and password are required' });
     }
     // Băm mật khẩu và lưu vào cơ sở dữ liệu
     bcrypt.hash(password, 10)
         .then((hashedPassword) => {
-            const newUser = new User({ email, password: hashedPassword, role });
+            const newUser = new User({ username, email, password: hashedPassword, role });
             return newUser.save();
         })
         .then(() => {
@@ -181,7 +226,6 @@ app.post('/register', (req, res) => {
 // Đăng nhập
 app.post('/login', (req, res) => {
     const { email, password } = req.body;
-
     // Tìm người dùng theo email
     User.findOne({ email })
         .then((user) => {
@@ -195,8 +239,8 @@ app.post('/login', (req, res) => {
                         return res.status(401).send('Invalid credentials');
                     }
                     // Tạo token
-                    const token = jwt.sign({ userId: user._id, role: user.role }, process.env.JWT_SECRET || 'secret_key', { expiresIn: '30s' });
-                    res.status(200).json({ token });
+                    const token = jwt.sign({ userId: user._id, role: user.role }, process.env.JWT_SECRET || 'secret_key', { expiresIn: '30 minutes' });
+                    res.status(200).json({ token, username: user.username });
                 });
         })
         .catch((error) => {

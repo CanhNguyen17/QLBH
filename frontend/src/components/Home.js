@@ -11,7 +11,7 @@ import { faStar } from '@fortawesome/free-solid-svg-icons';
 import '../css/Home.css'
 import '../css/ProductList.css';
 
-function Home({ handleAddToCart,showSuccessToast }) {
+function Home({ handleAddToCart }) {
 
     const [products, setProducts] = useState([]);
 
@@ -27,7 +27,7 @@ function Home({ handleAddToCart,showSuccessToast }) {
 
     return (
         <div>
-            <div className='row page_width home'>
+            <div className='row home'>
                 <div className='col col-6'>
                     <p >Trending product in 2024</p>
                     <span >Làm cho quá trình mua sắm của bạn trở nên dễ dàng hơn</span>
@@ -42,7 +42,7 @@ function Home({ handleAddToCart,showSuccessToast }) {
                 </div>
             </div>
 
-            <div className='row page_width commit-sign'>
+            <div className='row commit-sign'>
                 <div className='col col-3 commit-sign_green' >
                     <FontAwesomeIcon className='commit-sign_green-award' icon={faAward} />
                     <p>
@@ -76,7 +76,7 @@ function Home({ handleAddToCart,showSuccessToast }) {
             <h1>Sản phẩm bán chạy</h1>
 
             <div className="product-list">
-                <div className='row page_width'>
+                <div className='row'>
                     {products.map((product) => (
                         <div className='col col-3 product-list-wrap' key={product._id}>
                             <div>
@@ -116,7 +116,7 @@ function Home({ handleAddToCart,showSuccessToast }) {
                                 </div>
 
                                 <div className="card-body_primary">
-                                    <button className='card-body_primary-button' onClick={() => { handleAddToCart(product._id); showSuccessToast() }}>
+                                    <button className='card-body_primary-button' onClick={() => { handleAddToCart(product._id) }}>
                                         <FontAwesomeIcon className='card-body_primary-cartplus' icon={faCartPlus} />
                                         <p className="card-body_primary-size-p">Thêm vào giỏ</p>
                                     </button>

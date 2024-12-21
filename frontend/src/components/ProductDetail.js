@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
 import '../css/ProductDetail.css';
 
-function ProductDetail({ handleAddToCart,showSuccessToast }) {
+function ProductDetail({ handleAddToCart }) {
     const { slug } = useParams();
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -30,11 +30,11 @@ function ProductDetail({ handleAddToCart,showSuccessToast }) {
 
     return (
         <div>
-            <div className="row page_width">
+            <div className="row">
                 <div className="col col-12 img-extra">Sản phẩm</div>
             </div>
 
-            <div className='row page_width detail_cotainer'>
+            <div className='row detail_cotainer'>
                 <div className='col col-12 detail_page'>
                     <Link className='remove-text-decoration color-text-home' to='/shop'>Cửa hàng</Link> / {product.name}
                 </div>
@@ -69,7 +69,7 @@ function ProductDetail({ handleAddToCart,showSuccessToast }) {
                     </div>
 
                     <div className='detail_button'>
-                        <button className='detail_button-font-cart' onClick={() => { handleAddToCart(product._id); showSuccessToast() }}>
+                        <button className='detail_button-font-cart' onClick={() => { handleAddToCart(product._id) }}>
                             <FontAwesomeIcon className='card-body_primary-cartplus' icon={faCartPlus} />
                             <p>Thêm vào giỏ hàng</p>
                         </button>

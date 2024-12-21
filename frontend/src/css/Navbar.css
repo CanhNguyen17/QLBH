@@ -1,75 +1,137 @@
 .name-shop {
-    font-weight: 700;
-    color: #0a1d37;
-    font-size: 23px;
-    text-decoration: none;
-  }
-  
-  .nav {
-    position: sticky;
-    top: 0;
-    z-index: 2;
-    background-color: white;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 80px;
-  }
-  
-  .nav-header-between {
-    font-size: 16.5px;
-  }
-  
-  .nav-header-between_home {
-    text-decoration: none;
-    margin-right: 40px;
-    color: #0a1d37
-  }
-  
-  .nav-header-between_shop {
-    text-decoration: none;
-    margin-right: 40px;
-    color: #0a1d37;
-  }
-  
-  .nav-header-between_cart {
-    text-decoration: none;
-    color: #0a1d37;
-  }
-  
-  .nav-header-between a.active {
-    font-weight: bold;
-    border-bottom: 2px solid #0a1d37;
-  }
-  
-  .nav-header-right {
-    font-size: 16.5px;
-  }
-  
-  .nav-header-right_cart {
-    color: #0a1d37;
-    text-decoration: none;
-    padding-right: 10px;
-  }
-  
-  .nav-header-right_cart:hover {
-    color: #0758c9
-  }
-  
-  .faWind {
-    padding-right: 10px;
-  }
-  
-  .faUser {
-    padding-right: 5px;
-  }
-  
-  .nav-header-right_sign {
-    color: #0a1d37;
-    text-decoration: none;
-  }
-  
-  .nav-header-right_sign:hover {
-    color: #0758c9
-  }
-  
+  font-weight: 700;
+  color: #0a1d37;
+  font-size: 23px;
+  text-decoration: none;
+}
+
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 80px;
+}
+
+.nav-header-between {
+  text-align: center;
+  font-size: 16.5px;
+}
+
+.nav-header-between_home {
+  text-decoration: none;
+  margin-right: 40px;
+  color: #0a1d37
+}
+
+.nav-header-between_shop {
+  text-decoration: none;
+  margin-right: 40px;
+  color: #0a1d37;
+}
+
+.nav-header-between_cart {
+  text-decoration: none;
+  color: #0a1d37;
+}
+
+.nav-header-between a.active {
+  font-weight: bold;
+  border-bottom: 2px solid #0a1d37;
+}
+
+.nav-header-right {
+  font-size: 16.5px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.nav-header-right_cart {
+  color: #0a1d37;
+  text-decoration: none;
+  padding-right: 10px;
+}
+
+.nav-header-right_cart:hover {
+  color: #0758c9
+}
+
+.nav-user {
+  display: flex;
+  position: relative;
+  padding-left: 5px;
+}
+
+.nav-user:hover {
+  cursor: pointer;
+}
+
+.nav-user:hover .nav-user-infor {
+  display: block;
+}
+
+.nav-user-straightline {
+  display: flex;
+  align-items: center;
+}
+
+.nav-user-straightline img {
+  width: 18%;
+}
+
+.nav-user-straightline p {
+  font-size: 13.5px;
+  font-weight: 500;
+  padding-left: 5px;
+}
+
+.nav-user-infor {
+  display: none;
+  position: absolute;
+  top: 100%;
+  width: 70%;
+  border-radius: 5px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  box-shadow: 5px 5px 5px rgba(18, 17, 17, 0.1);
+}
+
+.nav-user-together {
+  padding: 7px;
+  text-align: center;
+}
+
+.nav-user-together:hover {
+  background-color: rgb(242, 239, 239);
+  border-radius: 5px;
+}
+
+.nav-user-link {
+  text-decoration: none;
+  color: #0a1d37;
+}
+
+.nav-user-link:hover {
+  color: #2565c0;
+}
+
+.faWind {
+  padding-right: 10px;
+}
+
+.faUser {
+  padding-right: 5px;
+}
+
+.nav-header-right_sign {
+  color: #0a1d37;
+  text-decoration: none;
+}
+
+.nav-header-right_sign:hover {
+  color: #0758c9
+}

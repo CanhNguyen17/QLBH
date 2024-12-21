@@ -8,7 +8,7 @@ import '../../css/Footer.css'
 function Footer() {
     return (
         <footer>
-            <div className='row page_width footer'>
+            <div className='row footer'>
                 <ul className="col col-3">
                     <p>CunCitizen
                         <br />

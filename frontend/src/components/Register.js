@@ -1,20 +1,25 @@
 import React from "react";
 import axios from "axios";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { AuthContext } from "./contexts/AuthContext";
 import { Link } from 'react-router-dom';
 import '../css/Register.css'
 
 function Register() {
+    const [usernameInput, setUsernameInput] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
 
+    const { login } = useContext(AuthContext);
+
     const handleRegister = (e) => {
         e.preventDefault();
 
-        axios
-            .post('http://localhost:5000/register', { email, password })
+        axios.post('http://localhost:5000/register', { username: usernameInput, email, password })
             .then((response) => {
+                const { token, username } = response.data;
+                login(username, token);
                 setMessage('Đăng ký thành công! Vui lòng đăng nhập');
             })
             .catch((error) => {
@@ -27,6 +32,13 @@ function Register() {
             <div className="register">
                 <p className="register-title">Đăng ký</p>
                 <form className="register-form" onSubmit={handleRegister}>
+                    <input
+                        type="text"
+                        value={usernameInput}
+                        onChange={(e) => setUsernameInput(e.target.value)}
+                        required
+                        placeholder="Username" />
+
                     <input
                         type="email"
                         value={email}

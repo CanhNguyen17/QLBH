@@ -1,7 +1,7 @@
 import React from "react";
 import DeleteModal from "./DeleteModal";
-import { useState, useEffect } from "react";
 import axios from 'axios';
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
@@ -11,22 +11,25 @@ import '../css/DeleteModal.css'
 
 function Cart() {
     const [cartItems, setCartItems] = useState([]);
-    const [error, setError] = useState(null);
-    //
     const [ModalOpen, setModalOpen] = useState(false);
     const [productIdToDelete, setProductIdToDelete] = useState(null);
-
+    //
     const navigate = useNavigate();
 
     /// Lấy giỏ hàng từ server khi load trang
     useEffect(() => {
-        axios.get('http://localhost:5000/cart')
-            .then(response => {
-                setCartItems(response.data); // Giỏ hàng từ API
-            })
-            .catch(err => {
-                setError(err.response?.data?.message || 'Lỗi khi tải giỏ hàng.');
-            });
+        const token = localStorage.getItem('token');
+        if (!token) {
+            console.error('Người dùng chưa đăng nhập.');
+        } else {
+            axios.get('http://localhost:5000/cart')
+                .then(response => {
+                    setCartItems(response.data); // Giỏ hàng từ API
+                })
+                .catch(error => {
+                    console.error('Lỗi khi tải giỏ hàng:', error);
+                });
+        }
     }, []);
 
     // mở , đóng modal
@@ -99,22 +102,41 @@ function Cart() {
         return accumulator + item.quantity;
     }, 0);
 
+    //thanh toan
+    const handleCheckout = () => {
+        const shippingFee = 30000;
+        const totalShipping = total + shippingFee;
+
+        const checkoutData = {
+            cartItems: cartItems,
+            quantity: quantity,
+            total: total,
+            shippingFee: shippingFee,
+            totalShipping: totalShipping
+        };
+
+        localStorage.setItem("checkoutData", JSON.stringify(checkoutData));
+        // Chuyển đến trang thanh toán
+        navigate('/checkout');
+    };
+
+
     return (
         <div>
-            <div className="row page_width">
+            <div className="row">
                 <div className="col col-12 img-extra">Giỏ hàng</div>
             </div>
 
             <div className="cart-list">
                 {cartItems.length > 0 ? (
-                    <div className="row page_width cart-title">
+                    <div className="row cart-title">
                         <div className="col col-1">Ảnh</div>
                         <div className="col col-4">Thông tin sản phẩm</div>
                         <div className="col col-4">Số lượng</div>
                     </div>
                 ) : ('')}
 
-                <div className="page_width">
+                <div>
                     {cartItems.length > 0 ? (
                         cartItems.map(item => (
                             <div className="row cart-item" key={item._id}>
@@ -175,7 +197,7 @@ function Cart() {
                                     <h4>{total}</h4>
                                 </div>
 
-                                <button>Đặt hàng</button>
+                                <button onClick={() => handleCheckout()}>Thanh toán</button>
                             </div>
                         </div>
                     ) : ('')}

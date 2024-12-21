@@ -84,10 +84,6 @@ button:disabled:hover {
   box-sizing: border-box;
 }
 
-.page_width {
-  width: 100%;
-}
-
 /* Định nghĩa cho các cột */
 .col {
   box-sizing: border-box;
