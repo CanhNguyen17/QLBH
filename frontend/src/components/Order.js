@@ -2,6 +2,7 @@ import React from "react";
 import axios from 'axios';
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import '../css/Order.css';
 
 function Order() {
     const [orderItems, setOrderItems] = useState([]);
@@ -23,37 +24,38 @@ function Order() {
 
     return (
         <div>
-            <div>
+            <div className="row">
+                <div className="col col-12 img-extra">Đơn hàng</div>
+            </div>
+
+            <div className="order-list">
                 {orderItems.length > 0 ? (
-                    <div>
-                        <div className="col col-2">Ảnh</div>
-                        <div className="col col-3">Tên</div>
-                        <div className="col col-2">Giá</div>
-                        <div className="col col-2">Số lượng</div>
-                        <div className="col col-3">Thời gian</div>
+                    <div className="row order-title">
+                        <div className="col col-1">Ảnh</div>
+                        <div className="col col-6">Tên</div>
+                        <div className="col col-1">Giá</div>
+                        <div className="col col-4">Thời gian đặt</div>
                     </div>
                 ) : ('')}
 
                 <div>
                     {orderItems.length > 0 ? (
                         orderItems.map(item => (
-                            <div className="row cart-item" key={item._id}>
-                                <div className="col col-2">
-                                    <img src={item.total} alt='' />
+                            <div className="row order-item" key={item._id}>
+                                <div className="col col-1 order-item_img">
+                                    <img src={item.products[0].image} alt='' />
                                 </div>
 
-                                <div className="col col-3">
+                                <div className="col col-6 order-item_info" >
                                     <div>
-                                        <h5>{item.name}</h5>
+                                        <h5>
+                                            {item.products.map(product => (<p>{product.name}</p>))}
+                                        </h5>
                                     </div>
                                 </div>
 
-                                <div className="col col-2">
-                                    <p ><span className="font-size_small">đ</span>{item.newPrice}</p>
-                                </div>
-
-                                <div className="col col-2">
-                                    <p>{item.quantity}</p>
+                                <div className="col col-1">
+                                    <p className="newPrice-red"><span className="font-size_small">đ</span>{item.totalShipping}</p>
                                 </div>
 
                                 <div className="col col-4">

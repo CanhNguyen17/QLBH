@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleCheck, faXmark, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
+import { faCircleCheck, faCircleXmark, faXmark } from "@fortawesome/free-solid-svg-icons";
 
-function Toast({ title, type, duration, onClose }) {
+const Toast = ({ title, type, duration, onClose }) => {
     const icons = {
         success: <FontAwesomeIcon icon={faCircleCheck} />,
         warning: <FontAwesomeIcon icon={faCircleXmark} />

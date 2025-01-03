@@ -31,7 +31,7 @@ ul {
 }
 
 .img-login-register {
-  background: linear-gradient( rgba(23, 15, 52, 0.5), rgba(23, 15, 52, 0.5)),
+  background: linear-gradient(rgba(23, 15, 52, 0.5), rgba(23, 15, 52, 0.5)),
     url('../../public/img/background-lg-register.jpg') no-repeat center center;
   background-size: cover;
 }
@@ -109,6 +109,11 @@ button:disabled:hover {
   max-width: calc(33.33% - 16px);
 }
 
+.col-5 {
+  flex: 1 1 calc(41.66% - 16px);
+  max-width: calc(41.66%- 16px);
+}
+
 .col-6 {
   flex: 1 1 calc(50% - 16px);
   max-width: calc(50% - 16px);
@@ -117,6 +122,11 @@ button:disabled:hover {
 .col-7 {
   flex: 1 1 calc(58.33% - 16px);
   max-width: calc(58.33% - 16px);
+}
+
+.col-8 {
+  flex: 1 1 calc(66.66% - 16px);
+  max-width: calc(66.66% - 16px);
 }
 
 .mt-4 {

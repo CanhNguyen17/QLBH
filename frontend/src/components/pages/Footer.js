@@ -52,15 +52,15 @@ function Footer() {
                     <p>Thông Tin Liên Hệ
                         <br />
                         <li>
-                            <FontAwesomeIcon icon={faLocationDot} />
+                            <FontAwesomeIcon style={{ paddingRight: '5px' }} icon={faLocationDot} />
                             412/1 Tôn Đức Thắng, Đà Nẵng
                         </li>
                         <li>
-                            <FontAwesomeIcon icon={faPhone} />
+                            <FontAwesomeIcon style={{ paddingRight: '5px' }} icon={faPhone} />
                             +363866809
                         </li>
                         <li>
-                            <FontAwesomeIcon icon={faEnvelope} />
+                            <FontAwesomeIcon style={{ paddingRight: '5px' }} icon={faEnvelope} />
                             canh038472@gmail.com
                         </li>
                     </p>

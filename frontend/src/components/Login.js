@@ -1,17 +1,20 @@
 import React from "react";
 import axios from "axios";
 import { useState, useContext } from "react";
+import { ToastContext } from "./contexts/ToastContext";
 import { AuthContext } from "./contexts/AuthContext";
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import '../css/Login.css'
 
-function Login({ showSuccessLoginToast }) {
+function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
     //
     const navigate = useNavigate();
+    //
+    const { showToast } = useContext(ToastContext)
 
     const { login } = useContext(AuthContext);
 
@@ -20,9 +23,9 @@ function Login({ showSuccessLoginToast }) {
 
         axios.post('http://localhost:5000/login', { email, password })
             .then((response) => {
-                const { token, username } = response.data;
-                login(token, username);
-                showSuccessLoginToast();
+                const { token, username, role } = response.data;
+                login(token, username, role);
+                showToast({ title: "Đăng nhập thành công!", type: "success" });
                 navigate("/");
             })
             .catch((error) => {

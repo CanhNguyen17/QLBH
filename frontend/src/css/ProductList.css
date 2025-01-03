@@ -155,3 +155,24 @@
     font-size: 16px;
     border: 1px solid #0a1d37;
 }
+
+.btn-common-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 15px
+}
+
+.btn {
+    padding: 13px;
+    border-radius: 5px;
+    border: none;
+    background-color: #0a1d37;
+    color: white;
+}
+
+.btn:hover {
+    background-color: #1f4b8a;
+    border: none;
+    cursor: pointer;
+}

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
+import { ToastContext } from '../contexts/ToastContext';
 import { Link, NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
@@ -8,15 +9,17 @@ import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 import '../../css/Navbar.css'
 
-function Navbar({ showLogoutToast }) {
+function Navbar() {
     //
     const navigate = useNavigate();
+    //
+    const { showToast } = useContext(ToastContext)
     //
     const { loggedIn, logout, username } = useContext(AuthContext);
 
     const handleLogout = () => {
         logout();
-        showLogoutToast();
+        showToast({ title: "Đăng xuất thành công!", type: "success" });
         navigate("/");
     }
 

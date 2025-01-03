@@ -1,96 +1,81 @@
-import React from "react";
-import { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useContext, useCallback } from "react";
 import axios from 'axios';
+import { CartContext } from "./contexts/CartContext";
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCartPlus, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
-import '../css/ProductList.css';
+import { faCartPlus, faMagnifyingGlass, faStar, faForward, faBackward } from '@fortawesome/free-solid-svg-icons';
 import debounce from 'lodash.debounce';
+import '../css/ProductList.css';
 
-function ProductList({ handleAddToCart }) {
+function ProductList() {
     const [products, setProducts] = useState([]);
-    const [categories, setCategories] = useState(["Tất cả", "Dây đeo", "Khăn choàng", "Vớ", "Quần", "Chân váy"]);
+    //
+    const [categories] = useState(["Tất cả", "Dây đeo", "Khăn choàng", "Vớ", "Quần", "Chân váy"]);
+    //
     const [selectedCategory, setSelectedCategory] = useState("Tất cả");
-    ///
     const [sortOrder, setSortOrder] = useState("");
-    ////
-    const [query, setQuery] = useState(''); // Từ khóa tìm kiếm
-
-    //set Sản phẩm từ API
-    useEffect(() => {
-        axios.get('http://localhost:5000/shop')
-            .then((response) => {
-                setProducts(response.data);
-            })
-            .catch((error) => {
-                console.error('Error fetching data:', error);
-            });
-    }, []);
-
-    // Khi thay đổi loại sản phẩm
-    const handleCategoryChange = (event) => {
-        const category = event.target.value;
-        setSelectedCategory(category);
-        fetchProducts(category, sortOrder); // Lấy sản phẩm theo loại được chọn
-    };
+    //
+    const [query, setQuery] = useState('');
+    //
+    const [page, setPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(0);
+    const limit = 8;
     ///
-    const handleSortChange = (event) => {
-        const sort = event.target.value;
-        setSortOrder(sort);
-        fetchProducts(selectedCategory, sort);
-    }
+    const { handleAddToCart } = useContext(CartContext);
 
-    // Lọc
-    const fetchProducts = (category, sort) => {
-        const baseUrl = "http://localhost:5000/shop";
-        const url = `${baseUrl}?category=${category !== "Tất cả" ? category : ""}&sort=${sort}`;
+    const fetchProducts = useCallback(() => {
+        const params = {
+            category: selectedCategory !== "Tất cả" ? selectedCategory : undefined,
+            sort: sortOrder || undefined,
+            q: query || undefined,
+            page,
+            limit,
+        };
 
-        axios.get(url)
+        axios.get('http://localhost:5000/shop', { params })
             .then((response) => {
-                setProducts(response.data);
+                const { data, totalPages } = response.data;
+                setProducts(data);
+                setTotalPages(totalPages);
             })
             .catch((error) => {
                 console.error("Error fetching products:", error);
-                setProducts([]); // Nếu lỗi, đặt danh sách sản phẩm thành rỗng
+                setProducts([]);
             });
-    };
+    }, [selectedCategory, sortOrder, query, page]);
 
-    // Lấy ds sản phẩm khi component mount
     useEffect(() => {
-        fetchProducts(selectedCategory, sortOrder);
-    }, []);
+        fetchProducts();
+    }, [fetchProducts]);
 
-
-    //// Xử lý nhập liệu trong ô tìm kiếm
-    const handleInputChange = (e) => {
-        const value = e.target.value;
-        setQuery(value);
-        debouncedSearch(value); // Gọi debounce để tránh gọi API liên tục
+    const handleCategoryChange = (e) => {
+        setSelectedCategory(e.target.value);
+        setPage(1); // Reset về trang đầu
     };
 
-    //// Debounce hàm tìm kiếm
+    const handleSortChange = (e) => {
+        setSortOrder(e.target.value);
+        setPage(1); // Reset về trang đầu
+    };
+
+    const handleInputChange = (e) => {
+        setQuery(e.target.value);
+        debouncedSearch(e.target.value);
+    };
+
     const debouncedSearch = useCallback(
         debounce((value) => {
-            loadProducts(value); // Gọi API sau khi debounce
+            setQuery(value);
+            setPage(1);
         }, 500),
-        []);
+        []
+    );
 
-    //// Hàm gọi API từ backend và xử lý tìm kiếm với Promise
-    const loadProducts = (searchQuery) => {
-        axios
-            .get(`http://localhost:5000/shop?q=${searchQuery}`)
-            .then((response) => {
-                setProducts(response.data);
-            })
-            .catch((error) => console.error('Error adding product to cart:', error));
-
+    const handlePageChange = (newPage) => {
+        if (newPage > 0 && newPage <= totalPages) {
+            setPage(newPage);
+        }
     };
-
-    //// Tải sản phẩm khi trang load lần đầu
-    useEffect(() => {
-        loadProducts('');
-    }, []);
 
     return (
         <div>
@@ -99,7 +84,7 @@ function ProductList({ handleAddToCart }) {
             </div>
 
             <div className="product-list">
-                <div className='row filter-search'>
+                <div className="row filter-search">
                     <div className="col col-3">
                         <select className="filter-category" value={selectedCategory} onChange={handleCategoryChange}>
                             {categories.map(category => (
@@ -109,18 +94,20 @@ function ProductList({ handleAddToCart }) {
                             ))}
                         </select>
                     </div>
-
-                    <div className="col col-3 ">
+                    <div className="col col-3">
                         <select className="filter-sortby" value={sortOrder} onChange={handleSortChange}>
-                            <option>Sắp xếp</option>
-                            <option value={"asc"}>Tăng dần</option>
-                            <option value={"desc"}>Giảm dần</option>
+                            <option value="">Sắp xếp</option>
+                            <option value="asc">Tăng dần</option>
+                            <option value="desc">Giảm dần</option>
                         </select>
                     </div>
-
                     <div className="col col-6 search-common">
                         <FontAwesomeIcon className="faMagnifyingGlass" icon={faMagnifyingGlass} />
-                        <input className="search-product" onChange={handleInputChange} placeholder="Tìm kiếm..."></input>
+                        <input
+                            className="search-product"
+                            onChange={handleInputChange}
+                            placeholder="Tìm kiếm..."
+                        />
                     </div>
                 </div>
 
@@ -174,9 +161,21 @@ function ProductList({ handleAddToCart }) {
                     ))
                     }
                 </div >
-            </div >
+
+                <div className="btn-common-pagination">
+                    <button className="btn btn-backward-prd" onClick={() => handlePageChange(page - 1)} disabled={page === 1}>
+                        <FontAwesomeIcon icon={faBackward} />
+                    </button>
+
+                    <span style={{ padding: '10px' }}>Trang {page}/{totalPages}</span>
+
+                    <button className="btn btn-nextward-prd" onClick={() => handlePageChange(page + 1)} disabled={page === totalPages}>
+                        <FontAwesomeIcon icon={faForward} />
+                    </button>
+                </div>
+            </div>
         </div>
-    )
+    );
 }
 
 export default ProductList;

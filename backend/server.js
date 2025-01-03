@@ -4,7 +4,7 @@ const ProductCart = require('./app/models/ProductCart');
 const User = require('./app/models/User')
 const ProductOrder = require('./app/models/ProductOrder');
 //
-const verifyToken = require('./middlewares/VerifyToken');
+const verifyToken = require('./middlewares/verifyToken');
 //
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
@@ -43,30 +43,39 @@ app.post('/create', (req, res) => {
         })
 });
 
-/// Trang chủ
+/// Trang chủ (filter va pagination)
 app.get('/shop', (req, res) => {
-    const category = req.query.category; // Lấy loại sản phẩm từ query params
-    const sort = req.query.sort;
-    const filter = category ? { category } : {}; // Tạo bộ lọc
-    const query = req.query.q ? req.query.q.toLowerCase() : ''; // Từ khóa tìm kiếm
+    const { category, sort, q, page = 1, limit = 8 } = req.query;
+    const skip = (page - 1) * limit;
 
-    Product.find(filter)
-        .sort(sort === 'asc' ? { newPrice: 1 } : sort === 'desc' ? { newPrice: -1 } : {})
-        .then((products) => {
-            // Nếu có từ khóa tìm kiếm, lọc lại danh sách sản phẩm
-            const filteredProducts = query
-                ? products.filter(product => product.name.toLowerCase().includes(query))
-                : products;
+    // Xây dựng bộ lọc
+    const filter = category && category !== "Tất cả" ? { category } : {};
+    if (q) {
+        filter.name = { $regex: q, $options: "i" }; // Tìm kiếm không phân biệt chữ hoa/thường
+    }
 
-            // Nếu tìm thấy sản phẩm, trả kết quả
-            if (filteredProducts.length > 0) {
-                res.json(filteredProducts);
-            } else {
-                // Nếu không tìm thấy sản phẩm, trả lỗi
-                res.status(404).json({ message: 'No products found' });
-            }
+    Promise.all([
+        // Lấy danh sách sản phẩm
+        Product.find(filter)
+            .sort(sort === "asc" ? { newPrice: 1 } : sort === "desc" ? { newPrice: -1 } : {})
+            .skip(skip)
+            .limit(parseInt(limit)),
+
+        // Đếm tổng số sản phẩm
+        Product.countDocuments(filter),
+    ])
+        .then(([products, total]) => {
+            // Kết quả trả về
+            res.json({
+                data: products,
+                total,
+                totalPages: Math.ceil(total / limit),
+                page: parseInt(page),
+            });
         })
-        .catch((error) => res.status(500).json({ message: error.message }));
+        .catch((error) => {
+            res.status(500).json({ message: "Có lỗi xảy ra", error: error.message });
+        });
 });
 
 //
@@ -191,14 +200,14 @@ app.post('/order', (req, res) => {
 
 //DS Don hang
 app.get('/order', (req, res) => {
-    ProductOrder.find({}).lean()
+    ProductOrder.find().lean()
         .then(products => res.json(products))
         .catch(error => res.status(500).json({ message: error.message }));
 });
 
 // Đăng ký người dùng
 app.post('/register', (req, res) => {
-    const { username, email, password, role } = req.body;
+    const { username, email, password, } = req.body;
 
     // Kiểm tra đầu vào
     if (!username || !email || !password) {
@@ -207,7 +216,9 @@ app.post('/register', (req, res) => {
     // Băm mật khẩu và lưu vào cơ sở dữ liệu
     bcrypt.hash(password, 10)
         .then((hashedPassword) => {
-            const newUser = new User({ username, email, password: hashedPassword, role });
+            const newUser = new User({
+                username, email, password: hashedPassword,
+            });
             return newUser.save();
         })
         .then(() => {
@@ -248,6 +259,37 @@ app.post('/login', (req, res) => {
             res.status(400).send('Error logging in');
         });
 });
+//
+app.put('/profile', (req, res) => {
+    const { phonenumber, address, city, country } = req.body;
+    User.findOneAndUpdate({ username: req.body.username }, { phonenumber, address, city, country }, { new: true })
+        .then(updatedUser => {
+            if (!updatedUser) {
+                return res.status(404).json({ error: 'User not found' });
+            }
+            res.json(updatedUser);
+        })
+        .catch(error => {
+            console.error('Error updating profile:', error);
+            res.status(500).json({ error: 'Internal server error' });
+        });
+});
+
+//
+app.get('/profile', (req, res) => {
+    User.findOne()
+        .then(user => {
+            if (!user) {
+                return res.status(404).json({ error: 'User not found' });
+            }
+            res.json(user); // Trả về thông tin user
+        })
+        .catch(error => {
+            console.error('Error fetching user:', error);
+            res.status(500).json({ error: 'Internal server error' });
+        });
+}
+)
 
 ///
 app.listen(PORT, () => {

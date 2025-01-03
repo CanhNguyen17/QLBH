@@ -40,7 +40,7 @@
     padding: 2% 2% 0 2%;
 }
 
-.infor-checkout-Pee h4{
+.infor-checkout-Pee h4 {
     font-weight: normal;
     color: rgb(23, 236, 23);
 }
@@ -58,4 +58,12 @@
     color: white;
     background-color: #264871;
     cursor: pointer;
+}
+
+.info-buyer p {
+    padding: 14px 0;
+}
+
+.info-buyer span {
+    font-weight: 600
 }

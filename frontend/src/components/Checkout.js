@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
+import { ProfileContext } from './contexts/ProfileContext';
+import { ToastContext } from "./contexts/ToastContext";
 import axios from 'axios';
 import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import '../css/Checkout.css'
 
-function Checkout({ showOrderToast }) {
+function Checkout() {
+    const { username, phonenumber, address, city, country } = useContext(ProfileContext)
+    const { showToast } = useContext(ToastContext)
     //
     const navigate = useNavigate();
     //
@@ -41,7 +45,7 @@ function Checkout({ showOrderToast }) {
         if (products.length > 0) {
             axios.post('http://localhost:5000/order', orderData)
                 .then(response => {
-                    showOrderToast();
+                    showToast({ title: "Đặt hàng thành công!", type: "success" });
                     //update products trong cart
                     axios.put('http://localhost:5000/cart')
                         .then(response => { })
@@ -68,8 +72,13 @@ function Checkout({ showOrderToast }) {
             </div>
 
             <div className="row info-checkout-container">
-                <div className="col col-6">
-                    <p>Thông tin cá nhân</p>
+                <div className="col col-6 info-buyer">
+                    <h3>Thông tin người mua:</h3>
+                    <p>- Tên người dùng: <span>{username}</span></p>
+                    <p>- Số điện thoại: <span>{phonenumber}</span></p>
+                    <p>- Địa chỉ: <span>{address}</span></p>
+                    <p>- Thành phố: <span>{city}</span></p>
+                    <p>- Nước: <span>{country}</span></p>
                 </div>
 
                 <div className="col col-6 infor-checkout">

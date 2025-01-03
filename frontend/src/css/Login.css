@@ -39,6 +39,9 @@
     padding: 3.5%;
     margin-top: 8%;
     margin-bottom: 0;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
     color: #0a1d37;
     background-color: white;
     align-self: center;

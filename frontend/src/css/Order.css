@@ -1,0 +1,42 @@
+.order-list {
+    margin: 30px 80px 150px;
+}
+
+.order-item {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #dadee3;
+    text-align: center;
+}
+
+.order-item_img img {
+    width: 100%;
+}
+
+.order-title {
+    border-bottom: 1px solid #dadee3;
+}
+
+.order-title .col {
+    padding: 0px 0px 15px 20px;
+    font-weight: 600;
+    font-size: 18px;
+    color: #0a1d37;
+    text-align: center;
+}
+
+.order-item_info h5 {
+    margin: 0;
+    padding-bottom: 7px;
+    font-size: 17px;
+    font-weight: 400;
+    color: rgb(59, 58, 58);
+    width: 95%;
+    height: 48px;
+    align-items: center;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    text-overflow: ellipsis;
+}

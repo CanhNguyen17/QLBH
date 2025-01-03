@@ -51,16 +51,16 @@
     font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
 }
 
-button[type="submit"] {
+.create-prd-button {
     color: white;
-    background-color: #007bff;
+    background-color: #0a1d37;
     border: none;
     padding: 12px;
     margin: 10px 0 40px 0;
     border-radius: 5px;
 }
 
-button[type="submit"]:hover {
+.create-prd-button:hover {
     background-color: #1772d4;
     cursor: pointer;
 }

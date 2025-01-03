@@ -9,7 +9,7 @@ function AuthProvider({ children }) {
     useEffect(() => {
         const token = localStorage.getItem('token');
         const storedUsername = localStorage.getItem('username');
-        
+
         if (token && storedUsername) {
             setLoggedIn(true);
             setUsername(storedUsername);//set de load ko mat username
@@ -18,7 +18,7 @@ function AuthProvider({ children }) {
         }
     }, []);
 
-    const login = (username, token) => {
+    const login = (token, username, role) => {
         localStorage.setItem('token', token);
         localStorage.setItem('username', username);
         setUsername(username);

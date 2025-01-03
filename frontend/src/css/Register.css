@@ -38,13 +38,17 @@
     padding: 3.5%;
     margin-top: 8%;
     margin-bottom: 0;
+    border-radius: 5px;
+    border: none;
     color: #0a1d37;
     background-color: white;
     align-self: center;
 }
 
 .register-form button:hover {
+    cursor: pointer;
     color: white;
+    border: none;
     background-color: #0758c9;
 }
 
