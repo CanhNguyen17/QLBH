@@ -42,7 +42,7 @@ function ProductDetail() {
                     <Link className='remove-text-decoration color-text-home' to='/shop'>Cửa hàng</Link> / {product.name}
                 </div>
 
-                <div className='col col-6'>
+                <div className='col col-6 detail_response'>
                     <img className='detail_img' src={product.image} alt={product.name} />
                 </div>
 

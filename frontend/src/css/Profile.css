@@ -1,3 +1,36 @@
+/* mobile and tablet: width <= 1024  */
+@media only screen and (max-width:63.9375em) {
+    .container-profile {
+        padding: 20px 20px !important;
+    }
+}
+
+/* mobile : width < 740px */
+@media only screen and (max-width:46.1875em) {
+    .container-profile {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .img-change_profile {
+        flex: 1 1 100%;
+        max-width: 100%;
+    }
+
+    .response-profile {
+        flex: 1 1 100%;
+        max-width: 100%;
+    }
+
+    .img-change_profile img {
+        margin-top: 15px;
+        min-width: 20% !important;
+    }
+}
+
+/* Tablet: width >= 740px and width<1024px*/
+@media only screen and (min-width:46.25em) and (max-width:63.9375em) {}
+
 .container-profile {
     padding: 30px 80px;
 }
@@ -70,7 +103,7 @@
 }
 
 .img-change_profile img {
-    width: 28%;
+    min-width: 28%;
 }
 
 .img-change_profile p {

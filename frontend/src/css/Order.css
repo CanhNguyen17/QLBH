@@ -1,5 +1,39 @@
+/* mobile and tablet: width <= 1024  */
+@media only screen and (max-width:63.9375em) {
+    .order-list {
+        padding: 20px 20px 150px !important;
+    }
+}
+
+/* mobile : width < 740px */
+@media only screen and (max-width:46.1875em) {
+    .order-title div{
+        font-size: 15px !important;
+    }
+
+    .order-item_info h5 {
+        height: 35px !important;
+    }
+
+    .order-item_info h5 {
+        font-size: 12px !important;
+    }
+
+    .order-item_newprice p {
+        font-size: 12px;
+    }
+
+    .order-item_createdAt p {
+        font-size: 12px;
+    }
+}
+
+
+/* Tablet: width >= 740px and width<1024px*/
+@media only screen and (min-width:46.25em) and (max-width:63.9375em) {}
+
 .order-list {
-    margin: 30px 80px 150px;
+    padding: 30px 80px 150px;
 }
 
 .order-item {
@@ -7,6 +41,10 @@
     align-items: center;
     border-bottom: 1px solid #dadee3;
     text-align: center;
+}
+
+.order-item_img {
+    max-width: 100%;
 }
 
 .order-item_img img {

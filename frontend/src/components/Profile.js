@@ -73,7 +73,7 @@ function Profile() {
                     <p>Cập nhật ảnh</p>
                 </div>
 
-                <form className="col col-8" onSubmit={handleUpdate}>
+                <form className="col col-8 response-profile" onSubmit={handleUpdate}>
                     <p className='text-profile'>Thông tin</p>
 
                     <div className='form-input_profile'>

@@ -1,3 +1,23 @@
+/* mobile and tablet: width <= 1024  */
+@media only screen and (max-width:63.9375em) {}
+
+/* mobile : width < 740px */
+@media only screen and (max-width:46.1875em) {
+    .register-form {
+        width: 90% !important;
+    }
+    .register-title {
+        font-size: 28px !important;
+    }
+}
+
+/* Tablet: width >= 740px and width<1024px*/
+@media only screen and (min-width:46.25em) and (max-width:63.9375em) {
+    .register-form {
+        width: 45% !important;
+    }
+}
+
 .register {
     display: flex;
     flex-direction: column;
@@ -21,8 +41,8 @@
     background-color: #0a1d37;
     border-radius: 1vh;
     width: 28%;
-    height: 47.5vh;
-    padding: 2% 1%;
+    min-height: 200px;
+    padding: 24px 12px;
     box-shadow: 0 0 30px rgb(244, 244, 246);
 }
 

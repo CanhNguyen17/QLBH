@@ -136,7 +136,7 @@ function Cart() {
                     </div>
                 ) : ('')}
 
-                <div>
+                <div className="">
                     {cartItems.length > 0 ? (
                         cartItems.map(item => (
                             <div className="row cart-item" key={item._id}>
@@ -173,8 +173,8 @@ function Cart() {
                             </div>
                         ))
                     ) : (
-                        <div className="cart-empty">
-                            <div className="cart-empty_back">
+                        <div className="cart-order-empty">
+                            <div className="cart-order-empty_back">
                                 <p>Giỏ hàng trống.
                                     <Link className='remove-text-decoration color-text-home' to={`/shop`}> Xem sản phẩm ngay!</Link>
                                 </p>

@@ -14,7 +14,6 @@ function Footer() {
                         <br />
                         <li> Mang lại những món hàng về quần áo hữu dụng trong cuộc sống hằng ngày, mua sắm nhanh chóng với trang web dễ nhìn và tương tác.</li>
                     </p>
-
                 </ul>
 
                 <ul className="col col-3">

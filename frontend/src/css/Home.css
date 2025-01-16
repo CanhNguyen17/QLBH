@@ -1,6 +1,55 @@
+/* mobile and tablet: width <= 1024  */
+@media only screen and (max-width:63.9375em) {
+    .home {
+        padding: 20px 20px !important;
+    }
+
+    .commit-sign {
+        padding: 20px 20px !important;
+    }
+}
+
+/* mobile : width < 740px */
+@media only screen and (max-width:46.1875em) {
+    .home {
+        flex-direction: column-reverse;
+    }
+
+    .introduce-home {
+        flex: 1 1 100%;
+        max-width: 100%;
+    }
+
+    .img-home {
+        flex: 1 1 100%;
+        max-width: 100%;
+        justify-content: center !important;
+    }
+
+    /* sign */
+    .commit-sign {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .sign {
+        flex: 1 1 100%;
+        max-width: 100%;
+    }
+}
+
+/* Tablet: width >= 740px and width<1024px*/
+@media only screen and (min-width:46.25em) and (max-width:63.9375em) {
+
+    .sign {
+        flex: 1 1 calc(50% - 16px);
+        max-width: calc(50% - 16px);
+    }
+}
+
 .home {
     background-color: #d6e5fb;
-    height: 540px;
+    min-height: 540px;
     display: flex;
     align-items: center;
     padding: 0 80px;
@@ -12,7 +61,7 @@
 }
 
 .img-background {
-    width: 90%;
+    width: 100%;
 }
 
 .home p {
@@ -52,15 +101,18 @@
     font-size: 18px;
 }
 
-.commit-sign_green {
+.sign {
     display: flex;
-    background-color: rgb(198, 230, 198);
     align-items: center;
     width: 100%;
-    height: 100px;
+    min-height: 100px;
     justify-content: center;
     border-radius: 5px;
     transition: transform 0.3s ease;
+}
+
+.commit-sign_green {
+    background-color: rgb(198, 230, 198);
 }
 
 .commit-sign_green:hover {
@@ -69,14 +121,7 @@
 }
 
 .commit-sign_orange {
-    display: flex;
     background-color: rgb(230, 211, 180);
-    align-items: center;
-    width: 100%;
-    height: 100px;
-    justify-content: center;
-    border-radius: 5px;
-    transition: transform 0.3s ease;
 }
 
 .commit-sign_orange:hover {
@@ -85,14 +130,7 @@
 }
 
 .commit-sign_blue {
-    display: flex;
     background-color: rgb(181, 214, 228);
-    align-items: center;
-    width: 100%;
-    height: 100px;
-    justify-content: center;
-    border-radius: 5px;
-    transition: transform 0.3s ease;
 }
 
 .commit-sign_blue:hover {
@@ -101,14 +139,7 @@
 }
 
 .commit-sign_yellow {
-    display: flex;
     background-color: rgb(239, 239, 188);
-    align-items: center;
-    width: 100%;
-    height: 100px;
-    justify-content: center;
-    border-radius: 5px;
-    transition: transform 0.3s ease;
 }
 
 .commit-sign_yellow:hover {

@@ -1,7 +1,32 @@
+/* mobile and tablet: width <= 1024  */
+@media only screen and (max-width:63.9375em) {
+    .info-checkout-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .infor-checkout {
+        min-width: 75% !important;
+        flex: 1 1 100%;
+        max-width: 100%;
+    }
+
+    .info-buyer {
+        flex: 1 1 100%;
+        max-width: 100%;
+    }
+}
+
+/* mobile : width < 740px */
+@media only screen and (max-width:46.1875em) {}
+
+/* Tablet: width >= 740px and width<1024px*/
+@media only screen and (min-width:46.25em) and (max-width:63.9375em) {}
+
 .info-checkout-container {
     display: flex;
     justify-content: center;
-    padding: 2% 0;
+    padding: 30px 0;
 }
 
 .infor-checkout {

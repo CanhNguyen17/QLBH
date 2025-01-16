@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
 import { faWind } from '@fortawesome/free-solid-svg-icons';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { faList } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 import '../../css/Navbar.css'
 
@@ -39,10 +40,14 @@ function Navbar() {
             </div>
 
             <div className='col col-4 nav-header-right'>
+                {/* hidden responsive */}
+                <input id='checkbox_navbar' type='checkbox'></input>
+                <label for='checkbox_navbar' className='overlay_navbar'></label>
+
                 <Link to='/cart' className='nav-header-right_cart'>
                     <FontAwesomeIcon className='faCartShopping' icon={faCartShopping} />
                 </Link>
-                /
+
                 {loggedIn ? (
                     // Nếu đã đăng nhập
                     <ul className='nav-user'>
@@ -67,9 +72,40 @@ function Navbar() {
                     // Nếu chưa đăng nhập
                     <Link to='/login' className='nav-header-right_sign'>
                         <FontAwesomeIcon className='faUser' icon={faUser} />
-                        Đăng nhập
+                        <p>Đăng nhập</p>
                     </Link>
                 )}
+
+                {/* hidden responsive */}
+                <label for='checkbox_navbar'>
+                    <FontAwesomeIcon className='faList' icon={faList} />
+                </label>
+
+                <label for='checkbox_navbar' className='nav-tab-hidden'>
+                    <div className='nav-user-together'>
+                        <Link className='nav-user-link' to='/'>Trang chủ</Link>
+                    </div>
+                    <div className='nav-user-together'>
+                        <Link className='nav-user-link' to='/shop'>Cửa hàng</Link>
+                    </div>
+                    <div className='nav-user-together'>
+                        <Link className='nav-user-link' to='/cart'>Giỏ hàng</Link>
+                    </div>
+
+                    {username ? (
+                        <div>
+                            <div className='nav-user-together'>
+                                <Link className='nav-user-link' to='/profile'>Hồ sơ</Link>
+                            </div>
+                            <div className='nav-user-together'>
+                                <Link className='nav-user-link' to='/order'>Đơn hàng</Link>
+                            </div>
+                            <div className='nav-user-together' onClick={handleLogout}>
+                                <Link className='nav-user-link'>Thoát</Link>
+                            </div>
+                        </div>
+                    ) : ('')}
+                </label>
             </div>
         </nav>
     )

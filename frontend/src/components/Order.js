@@ -54,18 +54,18 @@ function Order() {
                                     </div>
                                 </div>
 
-                                <div className="col col-1">
+                                <div className="col col-1 order-item_newprice">
                                     <p className="newPrice-red"><span className="font-size_small">đ</span>{item.totalShipping}</p>
                                 </div>
 
-                                <div className="col col-4">
+                                <div className="col col-4 order-item_createdAt">
                                     <p>{item.createdAt}</p>
                                 </div>
                             </div>
                         ))
                     ) : (
-                        <div className="cart-empty">
-                            <div className="cart-empty_back">
+                        <div className="cart-order-empty">
+                            <div className="cart-order-empty_back">
                                 <p >Đơn hàng trống.
                                     <Link className='remove-text-decoration color-text-home' to={`/shop`}> Thêm vào giỏ ngay!</Link>
                                 </p>

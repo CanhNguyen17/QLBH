@@ -1,4 +1,37 @@
+/* mobile and tablet: width <= 1024  */
+@media only screen and (max-width:63.9375em) {
+    .detail_cotainer {
+        padding: 20px 20px !important;
+    }
+}
+
+/* mobile : width < 740px */
+@media only screen and (max-width:46.1875em) {
+    .detail_cotainer {
+        flex-direction: column;
+    }
+
+    .detail_response {
+        flex: 1 1 100%;
+        max-width: 100%;
+    }
+
+    .detail_price {
+        flex: 1 1 100%;
+        max-width: 100%;
+    }
+
+    .detail_button {
+        position: sticky;
+        bottom: 0;
+    }
+}
+
+/* Tablet: width >= 740px and width<1024px*/
+@media only screen and (min-width:46.25em) and (max-width:63.9375em) {}
+
 .detail_cotainer {
+    display: flex;
     padding: 30px 80px;
 }
 
@@ -23,6 +56,10 @@
     border-radius: 5px;
     border: 1px solid rgb(212, 206, 206);
     border: 0;
+}
+
+.detail_price h2 {
+    margin: 0;
 }
 
 .detail_price-1 {

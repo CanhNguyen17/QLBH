@@ -13,7 +13,7 @@ function Home() {
     return (
         <div>
             <div className='row home'>
-                <div className='col col-6'>
+                <div className='col col-6 introduce-home'>
                     <p >Trending product in 2024</p>
                     <span >Làm cho quá trình mua sắm của bạn trở nên dễ dàng hơn</span>
                     <p >Website thường cung cấp thông tin về các bộ sưu tập thời trang mới nhất, theo mùa hoặc theo phong cách.Danh mục sản phẩm đa dạng, công cụ tìm kiếm và bộ lọc giúp khách hàng tìm sản phẩm theo giá, kích cỡ, màu sắc, thương hiệu hoặc phong cách.</p>
@@ -28,7 +28,7 @@ function Home() {
             </div>
 
             <div className='row commit-sign'>
-                <div className='col col-3 commit-sign_green' >
+                <div className='col col-3 sign commit-sign_green' >
                     <FontAwesomeIcon className='commit-sign_green-award' icon={faAward} />
                     <p>
                         Sản phẩm uy tín<br />
@@ -36,7 +36,7 @@ function Home() {
                     </p>
                 </div>
 
-                <div className='col col-3 commit-sign_orange' >
+                <div className='col col-3 sign commit-sign_orange' >
                     <FontAwesomeIcon className='commit-sign_orange-swap' icon={faRightLeft} />
                     <p>
                         Đổi trả 7 ngày <br />
@@ -44,14 +44,14 @@ function Home() {
                     </p>
                 </div>
 
-                <div className='col col-3 commit-sign_blue' >
+                <div className='col col-3 sign commit-sign_blue' >
                     <FontAwesomeIcon className='commit-sign_blue-headset' icon={faHeadset} />
                     <p>Tư vấn viên tận tình<br />
                         Nhiều kinh nghiệm
                     </p>
                 </div>
 
-                <div className='col col-3 commit-sign_yellow' >
+                <div className='col col-3 sign commit-sign_yellow' >
                     <FontAwesomeIcon className='commit-sign_yellow-truck' icon={faTruckFast} />
                     <p>Miễn phí giao hàng<br />
                         toàn quốc</p>

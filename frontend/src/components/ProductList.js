@@ -85,7 +85,7 @@ function ProductList() {
 
             <div className="product-list">
                 <div className="row filter-search">
-                    <div className="col col-3">
+                    <div className="col col-3 media-filter-prd">
                         <select className="filter-category" value={selectedCategory} onChange={handleCategoryChange}>
                             {categories.map(category => (
                                 <option key={category} value={category}>
@@ -94,14 +94,14 @@ function ProductList() {
                             ))}
                         </select>
                     </div>
-                    <div className="col col-3">
+                    <div className="col col-3 media-filter-prd">
                         <select className="filter-sortby" value={sortOrder} onChange={handleSortChange}>
                             <option value="">Sắp xếp</option>
                             <option value="asc">Tăng dần</option>
                             <option value="desc">Giảm dần</option>
                         </select>
                     </div>
-                    <div className="col col-6 search-common">
+                    <div className="col col-6 media-filter-prd search-common">
                         <FontAwesomeIcon className="faMagnifyingGlass" icon={faMagnifyingGlass} />
                         <input
                             className="search-product"
@@ -174,7 +174,7 @@ function ProductList() {
                     </button>
                 </div>
             </div>
-        </div>
+        </div >
     );
 }
 

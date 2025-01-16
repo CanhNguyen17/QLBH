@@ -1,7 +1,26 @@
+/* mobile and tablet: width <= 1024  */
+@media only screen and (max-width:63.9375em) {
+    
+}
+
+/* mobile : width < 740px */
+@media only screen and (max-width:46.1875em) {
+    .login-form {
+        width: 90% !important;
+    }
+}
+
+/* Tablet: width >= 740px and width<1024px*/
+@media only screen and (min-width:46.25em) and (max-width:63.9375em) {
+    .login-form {
+        width: 45% !important;
+    }
+}
+
 .login {
     display: flex;
     flex-direction: column;
-    padding: 3% 0 5% 0;
+    padding: 38px 0;
 }
 
 .login-title {
@@ -9,10 +28,9 @@
     color: white;
     font-weight: 700;
     font-size: 30px;
-    padding-bottom: 1.5%;
+    padding-bottom: 18px;
     z-index: 1;
 }
-
 
 .login-form {
     display: flex;
@@ -22,9 +40,9 @@
     background-color: #0a1d37;
     border-radius: 1vh;
     width: 28%;
-    height: 40vh;
-    padding: 2% 1%;
-    box-shadow:0px 0px 30px rgb(244, 244, 246);
+    min-height: 100px;
+    padding: 24px 12px;
+    box-shadow: 0px 0px 30px rgb(244, 244, 246);
 }
 
 .login-form input {
@@ -62,7 +80,7 @@
     position: absolute;
     align-self: center;
     color: orange;
-    font-size: 2.5vh;
+    font-size: 14px;
     bottom: 261px;
 }
 
