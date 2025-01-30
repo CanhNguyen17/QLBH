@@ -32,7 +32,7 @@ function ProductList() {
             limit,
         };
 
-        axios.get('http://localhost:5000/shop', { params })
+        axios.get('http://localhost:5000/products/shop', { params })
             .then((response) => {
                 const { data, totalPages } = response.data;
                 setProducts(data);

@@ -21,7 +21,7 @@ function Login() {
     const handleLogin = (e) => {
         e.preventDefault();
 
-        axios.post('http://localhost:5000/login', { email, password })
+        axios.post('http://localhost:5000/user/login', { email, password })
             .then((response) => {
                 const { token, username, role } = response.data;
                 login(token, username, role);

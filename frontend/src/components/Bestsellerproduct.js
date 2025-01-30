@@ -13,7 +13,7 @@ function Bestsellerproduct() {
     const [products, setProducts] = useState([]);
 
     useEffect(() => {
-        axios.get('http://localhost:5000/best-seller')
+        axios.get('http://localhost:5000/products/best-seller')
             .then((res) => {
                 setProducts(res.data)
             })

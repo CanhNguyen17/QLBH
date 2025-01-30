@@ -9,7 +9,7 @@ function Profile() {
     const { showToast } = useContext(ToastContext)
     // Hàm fetchData để lấy dữ liệu từ API và cập nhật trạng thái
     const fetchData = () => {
-        axios.get('http://localhost:5000/profile')
+        axios.get('http://localhost:5000/user/profile')
             .then(response => {
                 const { username, phonenumber, address, city, country } = response.data;
                 setUsername(username || '');
@@ -44,7 +44,7 @@ function Profile() {
             country,
         };
 
-        axios.put('http://localhost:5000/profile', updatedData)
+        axios.put('http://localhost:5000/user/profile', updatedData)
             .then(response => {
                 // Cập nhật trạng thái trực tiếp từ dữ liệu trả về
                 const { username, phonenumber, address, city, country } = response.data;

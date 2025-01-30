@@ -16,7 +16,7 @@ function ProductDetail() {
     const { handleAddToCart } = useContext(CartContext);
 
     useEffect(() => {
-        axios.get(`http://localhost:5000/product/${slug}`)
+        axios.get(`http://localhost:5000/products/${slug}`)
             .then(response => {
                 setProduct(response.data);
                 setLoading(false);

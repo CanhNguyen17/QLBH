@@ -27,7 +27,7 @@ function CreateProduct() {
             category
         };
 
-        axios.post('http://localhost:5000/create', productData)
+        axios.post('http://localhost:5000/products/create', productData)
             .then(response => {
                 navigate("/shop");
             })

@@ -13,7 +13,7 @@ function Register() {
     const handleRegister = (e) => {
         e.preventDefault();
 
-        axios.post('http://localhost:5000/register', {
+        axios.post('http://localhost:5000/user/register', {
             username: usernameInput, email, password
         })
             .then((response) => {
