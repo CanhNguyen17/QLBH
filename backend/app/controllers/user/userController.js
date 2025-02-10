@@ -1,4 +1,4 @@
-const User = require('../models/User');
+const User = require('../../models//User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
@@ -48,7 +48,7 @@ exports.loginUser = (req, res) => {
                     }
                     // Tạo token
                     const token = jwt.sign({ userId: user._id, role: user.role }, process.env.JWT_SECRET || 'secret_key', { expiresIn: '30 minutes' });
-                    res.status(200).json({ token, username: user.username });
+                    res.status(200).json({ token, username: user.username, role: user.role });
                 });
         })
         .catch((error) => {
@@ -75,7 +75,9 @@ exports.profileUser = (req, res) => {
 
 // get[/user/profile]
 exports.getProfileUser = (req, res) => {
-    User.findOne()
+    const userId = req.user._id; //*hiển thị theo từng user
+
+    User.findOne({ userId })
         .then(user => {
             if (!user) {
                 return res.status(404).json({ error: 'User not found' });

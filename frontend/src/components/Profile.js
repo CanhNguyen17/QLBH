@@ -7,9 +7,23 @@ import '../css/Profile.css'
 function Profile() {
     const { username, phonenumber, address, city, country, setUsername, setPhonenumber, setAddress, setCity, setCountry } = useContext(ProfileContext)
     const { showToast } = useContext(ToastContext)
+
+    useEffect(() => {
+        const token = localStorage.getItem('token')
+        if (!token) {
+            console.error('Người dùng chưa đăng nhập');
+        } else {
+            fetchData();
+        }
+    }, [])
+
     // Hàm fetchData để lấy dữ liệu từ API và cập nhật trạng thái
     const fetchData = () => {
-        axios.get('http://localhost:5000/user/profile')
+        axios.get('http://localhost:5000/user/profile', {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`, // Lấy token từ localStorage
+            }
+        })
             .then(response => {
                 const { username, phonenumber, address, city, country } = response.data;
                 setUsername(username || '');
@@ -22,15 +36,6 @@ function Profile() {
                 console.error('Error fetching profile:', error);
             });
     };
-
-    useEffect(() => {
-        const token = localStorage.getItem('token')
-        if (!token) {
-            console.error('Người dùng chưa đăng nhập');
-        } else {
-            fetchData();
-        }
-    }, [])
 
     //
     const handleUpdate = (e) => {

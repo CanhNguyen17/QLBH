@@ -12,7 +12,11 @@ function Order() {
         if (!token) {
             console.error('Người dùng chưa đăng nhập.');
         } else {
-            axios.get('http://localhost:5000/order')
+            axios.get('http://localhost:5000/order', {
+                headers: {
+                    Authorization: `Bearer ${token}` // Gửi token trong header
+                }
+            })
                 .then(response => {
                     setOrderItems(response.data); // Giỏ hàng từ API
                 })
@@ -32,7 +36,7 @@ function Order() {
                 {orderItems.length > 0 ? (
                     <div className="row order-title">
                         <div className="col col-1">Ảnh</div>
-                        <div className="col col-6">Tên</div>
+                        <div className="col col-6">Tên đơn hàng</div>
                         <div className="col col-1">Giá</div>
                         <div className="col col-4">Thời gian đặt</div>
                     </div>

@@ -17,6 +17,13 @@ import Register from './components/Register';
 import Profile from './components/Profile';
 import Checkout from './components/Checkout';
 import Order from './components/Order';
+import AllOrders from './components/admin/AllOrders';
+import AllProducts from './components/admin/AllProducts';
+import UpdateProduct from './components/UpdateProduct';
+import AllAccounts from './components/admin/AllAccounts';
+import CreateAccount from './components/CreateAccount';
+import UpdateAccount from './components/UpdateAccount';
+import ManagerSystem from './components/admin/ManagerSystem';
 import './css/App.css'
 import './css/Toast.css'
 
@@ -33,7 +40,6 @@ function App() {
                     <Navbar />
 
                     <Routes>
-                        <Route path="/create" element={<CreateProduct />} />
                         <Route path="/" element={
                             <>
                                 <Home />
@@ -48,6 +54,14 @@ function App() {
                         <Route path="/profile" element={<Profile />} />
                         <Route path="/checkout" element={<Checkout />} />
                         <Route path="/order" element={<Order />} />
+
+                        <Route path="/manager/admin" element={<ManagerSystem />} />
+
+                        <Route path="/create" element={<CreateProduct />} />
+                        <Route path="/update/:id/edit" element={<UpdateProduct />} />
+
+                        <Route path="/create-account" element={<CreateAccount />} />
+                        <Route path="/update/:id/edit-account" element={<UpdateAccount />} />
                     </Routes>
 
                     <Footer />

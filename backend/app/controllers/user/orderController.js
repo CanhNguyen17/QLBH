@@ -1,8 +1,10 @@
-const ProductOrder = require('../models/ProductOrder');
+const ProductOrder = require('../../models/ProductOrder');
 
 // post[/order]
 exports.createOrder = (req, res) => {
     const { products, total, shippingFee, totalShipping } = req.body;
+
+    const userId = req.user.userId; //*thêm sản phẩm theo user
 
     // Kiểm tra dữ liệu đầu vào
     if (!products || products.length === 0) {
@@ -11,6 +13,7 @@ exports.createOrder = (req, res) => {
 
     // Tạo đơn hàng mới
     const newOrder = new ProductOrder({
+        userId,
         products,
         total,
         shippingFee,
@@ -29,7 +32,8 @@ exports.createOrder = (req, res) => {
 
 // get[/order] DS Don hang
 exports.listOrder = (req, res) => {
-    ProductOrder.find().lean()
+    const userId = req.user.userId;
+    ProductOrder.find({ userId }).lean()
         .then(products => res.json(products))
         .catch(error => res.status(500).json({ message: error.message }));
 };

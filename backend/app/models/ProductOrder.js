@@ -5,6 +5,7 @@ mongoose.plugin(slug);
 const Schema = mongoose.Schema;
 
 const ProductOrder = new Schema({
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'user', required: true },
     products: [
         {
             productId: { type: String, require: true },

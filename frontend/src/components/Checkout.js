@@ -12,7 +12,7 @@ function Checkout() {
     //
     const navigate = useNavigate();
     //
-    const [checkoutData, setCheckoutData] = useState({ cartItems: [] });
+    const [checkoutData, setCheckoutData] = useState({ Items: [] }); // cartItems
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -27,7 +27,7 @@ function Checkout() {
     }, []);
 
     const handleOrder = () => {
-        const products = checkoutData.cartItems.map(item => ({
+        const products = checkoutData.Items.map(item => ({
             productId: item._id,
             name: item.name,
             image: item.image,
@@ -43,7 +43,10 @@ function Checkout() {
         };
 
         if (products.length > 0) {
-            axios.post('http://localhost:5000/order', orderData)
+            axios.post('http://localhost:5000/order', orderData,
+                {
+                    headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+                })
                 .then(response => {
                     showToast({ title: "Đặt hàng thành công!", type: "success" });
                     //update products trong cart
@@ -84,7 +87,7 @@ function Checkout() {
                 <div className="col col-6 infor-checkout">
                     <h3 className="infor-checkout-title">Thông tin thanh toán</h3>
                     <div className="infor-checkout-box">
-                        {checkoutData.cartItems.map((item) => (
+                        {checkoutData.Items.map((item) => (
                             <div key={item._id}>
                                 <p>
                                     <span className="infor-checkout-name">{item.name}</span>

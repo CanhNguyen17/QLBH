@@ -16,7 +16,7 @@ function Navbar() {
     //
     const { showToast } = useContext(ToastContext)
     //
-    const { loggedIn, logout, username } = useContext(AuthContext);
+    const { loggedIn, logout, username, role } = useContext(AuthContext);
 
     const handleLogout = () => {
         logout();
@@ -57,12 +57,23 @@ function Navbar() {
                         </div>
 
                         <li className='nav-user-infor'>
-                            <div className='nav-user-together'>
-                                <Link className='nav-user-link' to='/profile'>Hồ sơ</Link>
-                            </div>
-                            <div className='nav-user-together'>
-                                <Link className='nav-user-link' to='/order'>Đơn hàng</Link>
-                            </div>
+                            {role === 'admin' ? (
+                                <>
+                                    <div className='nav-user-together'>
+                                        <Link className='nav-user-link' to='/manager/admin'>Quản lý hệ thống</Link>
+                                    </div>
+                                </>
+                            ) : (
+                                <>
+                                    <div className='nav-user-together'>
+                                        <Link className='nav-user-link' to='/profile'>Hồ sơ</Link>
+                                    </div>
+                                    <div className='nav-user-together'>
+                                        <Link className='nav-user-link' to='/order'>Đơn hàng</Link>
+                                    </div>
+                                </>
+                            )}
+
                             <div className='nav-user-together' onClick={handleLogout}>
                                 <Link className='nav-user-link'>Thoát</Link>
                             </div>
@@ -94,12 +105,23 @@ function Navbar() {
 
                     {username ? (
                         <div>
-                            <div className='nav-user-together'>
-                                <Link className='nav-user-link' to='/profile'>Hồ sơ</Link>
-                            </div>
-                            <div className='nav-user-together'>
-                                <Link className='nav-user-link' to='/order'>Đơn hàng</Link>
-                            </div>
+                            {role === 'admin' ? (
+                                <>
+                                    <div className='nav-user-together'>
+                                        <Link className='nav-user-link' to='/manager/admin'>Quản lý hệ thống</Link>
+                                    </div>
+                                </>
+                            ) : (
+                                <>
+                                    <div className='nav-user-together'>
+                                        <Link className='nav-user-link' to='/profile'>Hồ sơ</Link>
+                                    </div>
+                                    <div className='nav-user-together'>
+                                        <Link className='nav-user-link' to='/order'>Đơn hàng</Link>
+                                    </div>
+                                </>
+                            )}
+
                             <div className='nav-user-together' onClick={handleLogout}>
                                 <Link className='nav-user-link'>Thoát</Link>
                             </div>

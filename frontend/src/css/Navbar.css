@@ -191,7 +191,7 @@
   display: none;
   position: absolute;
   top: 100%;
-  width: 70%;
+  min-width: 70%;
   border-radius: 5px;
   background-color: #fff;
   border: 1px solid #ddd;
@@ -199,7 +199,7 @@
 }
 
 .nav-user-together {
-  padding: 7px;
+  padding: 7px 10px;
   text-align: center;
   border-bottom: 1px solid rgb(236, 235, 235);
 }

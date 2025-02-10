@@ -150,6 +150,16 @@ button:disabled:hover {
   max-width: calc(66.66% - 16px);
 }
 
+.col-9 {
+  flex: 1 1 calc(75% - 16px);
+  max-width: calc(75% - 16px);
+}
+
+.col-10 {
+  flex: 1 1 calc(83.33% - 16px);
+  max-width: calc(83.33% - 16px);
+}
+
 .mt-4 {
   margin-top: 4px;
 }

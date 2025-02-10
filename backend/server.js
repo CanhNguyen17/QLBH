@@ -2,10 +2,13 @@
 const cors = require('cors');
 const express = require('express');
 const mongoose = require('mongoose');
-const productRoutes = require('../backend/app/routes/productRoutes');
-const cartRoutes = require('../backend/app/routes/cartRoutes');
-const orderRoutes = require('../backend/app/routes/orderRoutes');
-const userRoutes = require('../backend/app/routes/userRoutes');
+const productRoutes = require('../backend/app/routes/user/productRoutes');
+const cartRoutes = require('../backend/app/routes/user/cartRoutes');
+const orderRoutes = require('../backend/app/routes/user/orderRoutes');
+const userRoutes = require('../backend/app/routes/user/userRoutes');
+const allOrderRoutes = require('../backend/app/routes/admin/allOrderRoutes')
+const allProductRoutes = require('../backend/app/routes/admin/allProductRoutes')
+const allAccountRoutes = require('../backend/app/routes/admin/allAccountRoutes')
 require('dotenv').config();
 
 const app = express();
@@ -31,6 +34,10 @@ app.use('/products', productRoutes);
 app.use('/cart', cartRoutes);
 app.use('/order', orderRoutes);
 app.use('/user', userRoutes);
+//admin
+app.use('/allorder', allOrderRoutes);
+app.use('/allproduct', allProductRoutes);
+app.use('/allaccount', allAccountRoutes);
 
 //
 app.listen(PORT, () => {

@@ -1,7 +1,8 @@
 import React from "react";
-import DeleteModal from "./DeleteModal";
 import axios from 'axios';
-import { useState, useEffect } from "react";
+import DeleteModal from "./DeleteModal";
+import { ModalContext } from "./contexts/ModalContext";
+import { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
@@ -10,21 +11,25 @@ import '../css/Cart.css';
 import '../css/DeleteModal.css'
 
 function Cart() {
-    const [cartItems, setCartItems] = useState([]);
-    const [ModalOpen, setModalOpen] = useState(false);
-    const [productIdToDelete, setProductIdToDelete] = useState(null);
+    const { Items, ModalOpen, productIdToDelete, setItems, setModalOpen, handleOpenModal, handleCloseModal } = useContext(ModalContext);
     //
     const navigate = useNavigate();
 
     /// Lấy giỏ hàng từ server khi load trang
     useEffect(() => {
         const token = localStorage.getItem('token');
+        console.log('Token:', token);
         if (!token) {
             console.error('Người dùng chưa đăng nhập.');
         } else {
-            axios.get('http://localhost:5000/cart')
+            axios.get('http://localhost:5000/cart', {
+                headers: {
+                    Authorization: `Bearer ${token}` // Gửi token trong header
+                }
+            })
                 .then(response => {
-                    setCartItems(response.data); // Giỏ hàng từ API
+                    console.log('Giỏ hàng:', response.data); // Kiểm tra dữ liệu trả về
+                    setItems(response.data) // Giỏ hàng từ API
                 })
                 .catch(error => {
                     console.error('Lỗi khi tải giỏ hàng:', error);
@@ -32,24 +37,12 @@ function Cart() {
         }
     }, []);
 
-    // mở , đóng modal
-    const handleOpenModal = (productIdCart) => {
-        setProductIdToDelete(productIdCart);
-        setModalOpen(true);
-    };
-
-    const handleCloseModal = () => {
-        setProductIdToDelete(null);
-        setModalOpen(false);
-    };
-
     // Xử lý logic xóa sản phẩm
     const handleDelete = () => {
         if (productIdToDelete) {
             axios.delete(`http://localhost:5000/cart/${productIdToDelete}`)
                 .then(response => {
-                    setCartItems(prevItems => prevItems.filter(item => item._id !== productIdToDelete));
-                    navigate("/cart");
+                    setItems(prevItems => prevItems.filter(item => item._id !== productIdToDelete));
                 })
                 .catch((error) => {
                     console.error('Error deleting product from cart:', error);
@@ -62,7 +55,7 @@ function Cart() {
     const handlePlus = (productIdCart) => {
         axios.put(`http://localhost:5000/cart/${productIdCart}`, { action: "increase" })
             .then(response => {
-                setCartItems(prevItems => prevItems.map(item => item._id === productIdCart
+                setItems(prevItems => prevItems.map(item => item._id === productIdCart
                     ? { ...item, quantity: item.quantity + 1 }
                     : item
                 ))
@@ -74,11 +67,11 @@ function Cart() {
 
     // - so luong
     const handleMinus = (productIdCart) => {
-        const currentItem = cartItems.find(item => item._id === productIdCart);
+        const currentItem = Items.find(item => item._id === productIdCart);
         if (currentItem.quantity > 1) {
             axios.put(`http://localhost:5000/cart/${productIdCart}`, { action: "decrease" })
                 .then(response => {
-                    setCartItems(prevItems => prevItems.map(item => item._id === productIdCart
+                    setItems(prevItems => prevItems.map(item => item._id === productIdCart
                         ? { ...item, quantity: item.quantity - 1 }
                         : item
                     ))
@@ -88,17 +81,17 @@ function Cart() {
 
     // Ẩn SL <= 1
     const isDisabled = (productIdCart) => {
-        const currentItem = cartItems.find(item => item._id === productIdCart);
+        const currentItem = Items.find(item => item._id === productIdCart);
         return currentItem.quantity <= 1;
     };
 
     // Tổng  
-    const total = cartItems.reduce((accumulator, item) => {
+    const total = Items.reduce((accumulator, item) => {
         return accumulator + item.newPrice * item.quantity;
     }, 0);
 
     // Quantity (chỉ để hiển thị từ quantity đã có sẵn)
-    const quantity = cartItems.reduce((accumulator, item) => {
+    const quantity = Items.reduce((accumulator, item) => {
         return accumulator + item.quantity;
     }, 0);
 
@@ -108,7 +101,7 @@ function Cart() {
         const totalShipping = total + shippingFee;
 
         const checkoutData = {
-            cartItems: cartItems,
+            Items: Items,
             quantity: quantity,
             total: total,
             shippingFee: shippingFee,
@@ -128,7 +121,7 @@ function Cart() {
             </div>
 
             <div className="cart-list">
-                {cartItems.length > 0 ? (
+                {Items.length > 0 ? (
                     <div className="row cart-title">
                         <div className="col col-1">Ảnh</div>
                         <div className="col col-4">Thông tin sản phẩm</div>
@@ -137,8 +130,8 @@ function Cart() {
                 ) : ('')}
 
                 <div className="">
-                    {cartItems.length > 0 ? (
-                        cartItems.map(item => (
+                    {Items.length > 0 ? (
+                        Items.map(item => (
                             <div className="row cart-item" key={item._id}>
                                 <div className="col col-1 cart-item_img">
                                     <Link to={`/product/${item.slug}`}>
@@ -186,7 +179,7 @@ function Cart() {
                         </div>
                     )}
 
-                    {cartItems.length > 0 ? (
+                    {Items.length > 0 ? (
                         <div className="row page_width">
                             <div className="col col-3 cart-item_total">
                                 <div>
